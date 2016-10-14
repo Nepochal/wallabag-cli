@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
 import conf
+import wallabag_help
 
-print("wallabag.py")
-print("There's nothing to see here for now")
+wallabag_help.show(__file__)
