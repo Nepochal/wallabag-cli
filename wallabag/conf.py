@@ -4,7 +4,7 @@ Settings and configuration for wallabag-api.
 import json
 from collections import OrderedDict
 
-CONFIG_FILENAME = ".wallabag-api"
+CONFIG_FILENAME = ".wallabag-cli"
 
 
 class Configs():
@@ -23,7 +23,10 @@ def __configs2dictionary():
     """
     Converts the configuration values to a json serializable dictionary.
 
-    Return: Dictionary
+    Returns
+    -------
+    bool
+    Dictionary with the configurations
     """
 
     wallabag_api = OrderedDict()
@@ -40,5 +43,9 @@ def __configs2dictionary():
 
 
 def save(path=CONFIG_FILENAME):
+    file = open(path, mode='w')
+
     jsonsave = json.dumps(__configs2dictionary(), indent=4)
-    print(jsonsave)
+    file.write(jsonsave)
+
+    file.close()
