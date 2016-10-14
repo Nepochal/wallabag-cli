@@ -1,5 +1,5 @@
 """
-Settings and configuration for wallabag-api.
+Settings and configuration for wallabag-cli.
 """
 import json
 from collections import OrderedDict
@@ -76,13 +76,15 @@ def save(path=CONFIG_FILENAME):
     bool
         True if successful
     """
-    file = open(path, mode='w')
+    try:
+        with open(path, mode='w') as file:
+            jsonsave = json.dumps(__configs2dictionary(), indent=4)
+            file.write(jsonsave)
 
-    jsonsave = json.dumps(__configs2dictionary(), indent=4)
-    file.write(jsonsave)
-
-    file.close()
-    return True
+            file.close()
+        return True
+    except:
+        return False
 
 
 def load(path=CONFIG_FILENAME):
@@ -106,5 +108,3 @@ def load(path=CONFIG_FILENAME):
     dic = json.loads(filecontent)
     __dicionary2config(dic['wallabag_api'])
     return True
-
-load()
