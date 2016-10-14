@@ -22,11 +22,16 @@ def start(ask_serverurl=True, ask_username=True, ask_password=True, ask_oauth2=T
         client = __client(client == "")
         secret = __secret(secret == "")
 
-    conf.set_config('serverurl', serverurl)
-    conf.set_config('username', username)
-    conf.set_config('password', password)
-    conf.set_config('client', client)
-    conf.set_config('secret', secret)
+    if(serverurl != ""):
+        conf.set_config('serverurl', serverurl)
+    if(username != ""):
+        conf.set_config('username', username)
+    if(password != ""):
+        conf.set_config('password', password)
+    if(client != ""):
+        conf.set_config('client', client)
+    if(secret != ""):
+        conf.set_config('secret', secret)
 
     if conf.save():
         print("The config was saved successfully.")

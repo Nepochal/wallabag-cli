@@ -57,10 +57,10 @@ def __configs2dictionary():
 
 def __dicionary2config(configdict):
     for item in configdict:
-        if type(item) is str:
+        if type(configdict[item]) is str:
             set_config(item, configdict[item])
-        elif type(item) is dict:
-            __dicionary2config(item)
+        elif type(configdict[item]) is dict:
+            __dicionary2config(configdict[item])
 
 
 def exist(path=CONFIG_FILENAME):
