@@ -1,3 +1,10 @@
+#Linux/KDE5
+.directory
+
+#python
 __pycache__/
 *.py[cod]
 *$py.class
+
+#wallabag-cli
+.wallabag-cli
