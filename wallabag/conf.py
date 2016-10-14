@@ -1,4 +1,9 @@
-class config:
+"""
+Settings and configuration for wallabag-api.
+"""
+
+
+class Configs:
     """
     Static struct for storing the global configs.
     """
