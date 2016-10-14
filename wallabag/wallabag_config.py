@@ -33,6 +33,7 @@ def start(ask_serverurl=True, ask_username=True, ask_password=True, ask_oauth2=T
     if(secret != ""):
         conf.set_config('secret', secret)
 
+    print()
     if conf.save():
         print("The config was saved successfully.")
         exit(0)
@@ -42,6 +43,7 @@ def start(ask_serverurl=True, ask_username=True, ask_password=True, ask_oauth2=T
 
 
 def __serverurl(forced):
+    print()
     print("Enter the url of your Wallabag instance.")
     print("e.g. https://www.wallabag.com")
     if not forced:
@@ -51,6 +53,7 @@ def __serverurl(forced):
 
 
 def __username(forced):
+    print()
     print("Enter your Wallabag username.")
     if not forced:
         print("(Leave the text empty to leave the username unchanged.)")
@@ -59,6 +62,7 @@ def __username(forced):
 
 
 def __password(forced):
+    print()
     print("Enter your Wallabag password.")
     if not forced:
         print("(Leave the text empty to leave the password unchanged.)")
@@ -67,6 +71,7 @@ def __password(forced):
 
 
 def __client(forced):
+    print()
     print("Enter the client id of your Wallabag API.")
     if not forced:
         print("(Leave the text empty to not change the client id.)")
@@ -75,6 +80,7 @@ def __client(forced):
 
 
 def __secret(forced):
+    print()
     print("Enter the client secret of your Wallabag API.")
     if not forced:
         print("(Leave the text empty to not change the client secret.)")
