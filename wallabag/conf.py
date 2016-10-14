@@ -3,6 +3,7 @@ Settings and configuration for wallabag-cli.
 """
 import json
 from collections import OrderedDict
+from pathlib import Path
 
 CONFIG_FILENAME = ".wallabag-cli"
 
@@ -101,10 +102,14 @@ def load(path=CONFIG_FILENAME):
     bool
         True if successfull. Otherwise the config will be filles with default values
     """
-    file = open(path, mode='r')
-
-    filecontent = file.read()
-    file.close()
-    dic = json.loads(filecontent)
-    __dicionary2config(dic['wallabag_api'])
-    return True
+    try:
+        with open(path, mode='r') as file:
+            filecontent = file.read()
+            file.close()
+        dic = json.loads(filecontent)
+        __dicionary2config(dic['wallabag_api'])
+        return True
+    except json.decoder.JSONDecodeError:
+        return False
+    except PermissionError:
+        return False
