@@ -86,5 +86,3 @@ def __secret(forced):
         print("(Leave the text empty to not change the client secret.)")
     value = input()
     return value
-
-start()
