@@ -4,11 +4,13 @@ from sys import argv
 from wallabag_help import show as help
 import wallabag_config
 
+
 def checkCommands(command, options, allowed_options):
     for option in options:
         if not option in allowed_options:
             print("Invalid option {0} in command {1}.".format(option, command))
-            print("Use {0} {1} --help for a list of allowed options.".format(argv[0], command))
+            print(
+                "Use {0} {1} --help for a list of allowed options.".format(argv[0], command))
             print()
             return False
     return True
@@ -34,7 +36,7 @@ else:
 optionlist = argv[2:len(argv)]
 
 if command == "config":
-    allowed_options = [ ]
+    allowed_options = []
     if "-h" in optionlist or "--help" in optionlist:
         help(argv[0], command)
         exit(0)
