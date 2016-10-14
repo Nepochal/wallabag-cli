@@ -63,6 +63,11 @@ def __dicionary2config(configdict):
             __dicionary2config(item)
 
 
+def exist(path=CONFIG_FILENAME):
+    file = Path(path)
+    return file.is_file()
+
+
 def save(path=CONFIG_FILENAME):
     """
     Saves the config into a file.
@@ -102,6 +107,8 @@ def load(path=CONFIG_FILENAME):
     bool
         True if successfull. Otherwise the config will be filles with default values
     """
+    if not exist(path):
+        return False
     try:
         with open(path, mode='r') as file:
             filecontent = file.read()
