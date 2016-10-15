@@ -15,6 +15,15 @@ class ApiMethod(Enum):
     version = "/api/version"
 
 
+class Response:
+    http_code = 0
+    error = Error.undefined
+    response = ""
+
+    def __init__(self, api_response):
+        self.http_code, self.error, self.response = api_response
+
+
 def __getApiUrl(api_method):
     if api_method in ApiMethod:
         return conf.get_config('serverurl') + api_method.value
