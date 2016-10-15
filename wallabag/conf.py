@@ -120,3 +120,15 @@ def load(path=CONFIG_FILENAME):
         return False
     except PermissionError:
         return False
+
+
+def load_or_create(path=CONFIG_FILENAME):
+    success = False
+    if not exist(path):
+        success = save(path)
+    else:
+        success = load(path)
+    if not success:
+        print("Error: Could not load or create the config file.")
+        print()
+        exit(-1)

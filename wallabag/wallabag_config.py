@@ -5,7 +5,8 @@ import conf
 
 
 def start(ask_serverurl=True, ask_username=True, ask_password=True, ask_oauth2=True):
-    conf.load()
+    conf.load_or_create()
+
     serverurl = conf.get_config('serverurl')
     username = conf.get_config('username')
     password = conf.get_config('password')
