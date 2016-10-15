@@ -1,6 +1,7 @@
 """
 Interactive configuration tool for wallabag-cli.
 """
+import re
 import conf
 
 
@@ -54,6 +55,10 @@ def __serverurl(forced):
 
     if forced and value == "":
         error = True
+
+    # add http:// if there is no http:// or https://
+    if not re.compile("(?i)https?:\\/\\/.+").match(value):
+        value = "http://" + value
 
     if error:
         return __serverurl(forced)
