@@ -63,6 +63,10 @@ def is_minimum_version(version_response):
                 return False
 
 
+def is_rersponse_status_ok(response):
+    return response.http_code == 200
+
+
 def version():
     url = __getApiUrl(ApiMethod.version)
     response = requests.get(url)
