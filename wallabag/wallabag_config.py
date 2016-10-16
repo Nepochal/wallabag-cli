@@ -53,6 +53,9 @@ def __serverurl(forced):
         print("(Leave the text empty to leave the url unchanged.)")
     value = input()
 
+    #trim leading and following spaces
+    value = value.strip()
+
     if forced and value == "":
         error = True
 
@@ -72,6 +75,9 @@ def __username(forced):
     if not forced:
         print("(Leave the text empty to leave the username unchanged.)")
     value = input()
+
+    #trim leading and following spaces
+    value = value.strip()
 
     if forced and value == "":
         error = True
@@ -107,6 +113,9 @@ def __client(forced):
         print("(Leave the text empty to not change the client id.)")
     value = input()
 
+    #trim leading and following spaces
+    value = value.strip()
+
     if forced and value == "":
         error = True
 
@@ -123,6 +132,9 @@ def __secret(forced):
     if not forced:
         print("(Leave the text empty to not change the client secret.)")
     value = input()
+
+    #trim leading and following spaces
+    value = value.strip()
 
     if forced and value == "":
         error = True
