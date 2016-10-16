@@ -34,8 +34,8 @@ def __getApiUrl(api_method):
     return None
 
 
-def is_minimum_version(response_tupel):
-    versionstring = response_tupel[2]
+def is_minimum_version(version_response):
+    versionstring = version_response.response
 
     if not re.compile('"\\d+\\.\\d+\\.\\d+"').match(versionstring):
         return False
@@ -67,4 +67,4 @@ def version():
     url = __getApiUrl(ApiMethod.version)
     response = requests.get(url)
 
-    return response.status_code, Error.ok, response.text
+    return Response([response.status_code, Error.ok, response.text])
