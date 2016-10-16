@@ -5,7 +5,6 @@ from enum import Enum
 import re
 import requests
 from conf import Configs
-import conf
 
 
 MINIMUM_API_VERSION = 2, 1, 1
@@ -44,11 +43,11 @@ class Response:
         # 404 not found
         elif self.http_code == 404:
             self.error = Error.http_not_found
-            self.error_text = "API was not found."
+            self.error_text = "404: API was not found."
         # 403 forbidden
         elif self.http_code == 403:
             self.error = Error.http_forbidden
-            self.error_text = "Could not reach API due to rights issues."
+            self.error_text = "403: Could not reach API due to rights issues."
         # 200 okay
         elif self.http_code == 200:
             self.error = Error.ok
