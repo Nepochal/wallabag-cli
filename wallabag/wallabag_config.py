@@ -24,15 +24,15 @@ def start(ask_serverurl=True, ask_username=True, ask_password=True, ask_oauth2=T
         client = __client(client == "")
         secret = __secret(secret == "")
 
-    if(serverurl != ""):
+    if serverurl != "":
         conf.set_config('serverurl', serverurl)
-    if(username != ""):
+    if username != "":
         conf.set_config('username', username)
-    if(password != ""):
+    if password != "":
         conf.set_config('password', password)
-    if(client != ""):
+    if client != "":
         conf.set_config('client', client)
-    if(secret != ""):
+    if secret != "":
         conf.set_config('secret', secret)
 
     print()
@@ -53,8 +53,12 @@ def __serverurl(forced):
         print("(Leave the text empty to leave the url unchanged.)")
     value = input()
 
-    #trim leading and following spaces
+    # trim leading and following spaces
     value = value.strip()
+
+    # remove following slash
+    if value[len(value) - 1] == '/':
+        value = value[0:len(value) - 1]
 
     if forced and value == "":
         error = True
@@ -76,7 +80,7 @@ def __username(forced):
         print("(Leave the text empty to leave the username unchanged.)")
     value = input()
 
-    #trim leading and following spaces
+    # trim leading and following spaces
     value = value.strip()
 
     if forced and value == "":
@@ -113,7 +117,7 @@ def __client(forced):
         print("(Leave the text empty to not change the client id.)")
     value = input()
 
-    #trim leading and following spaces
+    # trim leading and following spaces
     value = value.strip()
 
     if forced and value == "":
@@ -133,7 +137,7 @@ def __secret(forced):
         print("(Leave the text empty to not change the client secret.)")
     value = input()
 
-    #trim leading and following spaces
+    # trim leading and following spaces
     value = value.strip()
 
     if forced and value == "":
