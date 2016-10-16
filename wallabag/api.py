@@ -4,6 +4,7 @@ Wallabag API accesses.
 from enum import Enum
 import re
 import requests
+from conf import Configs
 import conf
 
 
@@ -13,25 +14,54 @@ MINIMUM_API_VERSION = 2, 1, 1
 class Error(Enum):
     undefined = -1
     ok = 0
+    dns_error = 1
 
 
 class ApiMethod(Enum):
+    token = "/oauth/v2/token"
     version = "/api/version"
 
 
 class Response:
     http_code = 0
     error = Error.undefined
+    error_text = ""
+    error_description = ""
+
     response = ""
 
-    def __init__(self, api_response):
-        self.http_code, self.error, self.response = api_response
+    def __init__(self, status_code, http_response):
+        self.http_code = status_code
+        self.response = http_response
+
+        # Special case: DNS not found
+        if self.http_code == 0:
+            self.error = Error.dns_error
+            self.error_text = "Name or service not known."
+
+    def hasError(self):
+        return self.error != Error.ok
 
 
 def __getApiUrl(api_method):
     if api_method in ApiMethod:
-        return conf.get_config('serverurl') + api_method.value
+        return Configs.serverurl + api_method.value
     return None
+
+
+def __requestGet(url, data=None):
+    ret = None
+    request = None
+
+    try:
+        if data == None:
+            request = requests.get(url)
+        else:
+            request = requests.get(url, data)
+        ret = Response(request.status_code, request.text)
+    except requests.exceptions.ConnectionError:
+        ret = Response(0, None)
+    return ret
 
 
 def is_minimum_version(version_response):
@@ -69,6 +99,5 @@ def is_rersponse_status_ok(response):
 
 def version():
     url = __getApiUrl(ApiMethod.version)
-    response = requests.get(url)
-
-    return Response([response.status_code, Error.ok, response.text])
+    response = __requestGet(url)
+    return response
