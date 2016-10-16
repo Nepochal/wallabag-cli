@@ -39,6 +39,9 @@ class Response:
             self.error = Error.dns_error
             self.error_text = "Name or service not known."
 
+    def is_rersponse_status_ok(self):
+        return self.http_code == 200
+
     def hasError(self):
         return self.error != Error.ok
 
@@ -91,10 +94,6 @@ def is_minimum_version(version_response):
                 return True
             else:
                 return False
-
-
-def is_rersponse_status_ok(response):
-    return response.http_code == 200
 
 
 def version():
