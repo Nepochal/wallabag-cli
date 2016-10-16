@@ -15,6 +15,8 @@ class Error(Enum):
     undefined = -1
     ok = 0
     dns_error = 1
+    http_not_found = 10
+    http_forbidden = 11
 
 
 class ApiMethod(Enum):
@@ -34,10 +36,22 @@ class Response:
         self.http_code = status_code
         self.response = http_response
 
-        # Special case: DNS not found
+        # DNS/HTTP cases:
+        # DNS not found
         if self.http_code == 0:
             self.error = Error.dns_error
             self.error_text = "Name or service not known."
+        # 404 not found
+        elif self.http_code == 404:
+            self.error = Error.http_not_found
+            self.error_text = "API was not found."
+        # 403 forbidden
+        elif self.http_code == 403:
+            self.error = Error.http_forbidden
+            self.error_text = "Could not reach API due to rights issues."
+        # 200 okay
+        elif self.http_code == 200:
+            self.error = Error.ok
 
     def is_rersponse_status_ok(self):
         return self.http_code == 200
@@ -62,6 +76,7 @@ def __requestGet(url, data=None):
         else:
             request = requests.get(url, data)
         ret = Response(request.status_code, request.text)
+    # dns error
     except requests.exceptions.ConnectionError:
         ret = Response(0, None)
     return ret
