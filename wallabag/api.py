@@ -128,3 +128,15 @@ def version():
     url = __getApiUrl(ApiMethod.version)
     response = __requestGet(url)
     return response
+
+
+def token():
+    url = __getApiUrl(ApiMethod.token)
+    data = "grant_type=password"
+    data = "{0}&client_id={1}".format(data, Configs.client)
+    data = "{0}&client_secret={1}".format(data, Configs.secret)
+    data = "{0}&username={1}".format(data, Configs.username)
+    data = "{0}&password={1}".format(data, Configs.password)
+
+    response = __requestGet(url, data)
+    return response
