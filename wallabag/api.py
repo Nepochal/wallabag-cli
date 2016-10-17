@@ -75,8 +75,10 @@ class Response:
         return self.error != Error.ok
 
 
-def __get_api_url(api_method):
+def __get_api_url(api_method, different_url=None):
     if api_method in ApiMethod:
+        if different_url != None:
+            return different_url + api_method.value
         return Configs.serverurl + api_method.value
     return None
 
@@ -123,14 +125,14 @@ def is_minimum_version(version_response):
             return z >= tz
 
 
-def api_version():
-    url = __get_api_url(ApiMethod.version)
+def api_version(different_url=None):
+    url = __get_api_url(ApiMethod.version, different_url)
     response = __request_get(url)
     return response
 
 
-def api_token():
-    url = __get_api_url(ApiMethod.token)
+def api_token(different_url=None):
+    url = __get_api_url(ApiMethod.token, different_url)
     data = "grant_type=password"
     data = "{0}&client_id={1}".format(data, Configs.client)
     data = "{0}&client_secret={1}".format(data, Configs.secret)

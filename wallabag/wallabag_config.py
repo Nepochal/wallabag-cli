@@ -2,6 +2,7 @@
 Interactive configuration tool for wallabag-cli.
 """
 import re
+import api
 import conf
 
 
@@ -68,6 +69,11 @@ def __serverurl(forced):
     # add http:// if there is no http:// or https://
     if not re.compile("(?i)https?:\\/\\/.+").match(value):
         value = "http://" + value
+
+    testresponse = api.api_version(value)
+    if testresponse.hasError:
+        print(testresponse.error_text)
+        return __serverurl(forced)
 
     return value
 

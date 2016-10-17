@@ -83,7 +83,7 @@ def __configs2dictionary():
 def __dicionary2config(configdict):
     for item in configdict:
         if isinstance(configdict[item], str) or isinstance(configdict[item], int) or \
-        isinstance(configdict[item], float):
+                isinstance(configdict[item], float):
             set_config(item, configdict[item])
         elif isinstance(configdict[item], dict):
             __dicionary2config(configdict[item])
