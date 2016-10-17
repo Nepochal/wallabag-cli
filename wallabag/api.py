@@ -11,6 +11,7 @@ from conf import Configs
 
 
 MINIMUM_API_VERSION = 2, 1, 1
+MINIMUM_API_VERSION_HR = "2.1.1"
 
 
 class Error(Enum):

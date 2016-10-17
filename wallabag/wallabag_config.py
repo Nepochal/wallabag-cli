@@ -70,10 +70,17 @@ def __serverurl(forced):
     if not re.compile("(?i)https?:\\/\\/.+").match(value):
         value = "http://" + value
 
+    # dns and http status check
     testresponse = api.api_version(value)
-    if testresponse.hasError:
+    if testresponse.hasError():
         print(testresponse.error_text)
         return __serverurl(forced)
+
+    # minimum api check
+    if not api.is_minimum_version(testresponse):
+        print("Your wallabag instance is too old. You need at least version {0}.".format(
+            api.MINIMUM_API_VERSION_HR))
+        exit(-1)
 
     return value
 
