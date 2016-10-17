@@ -4,6 +4,7 @@ Wallabag API accesses.
 from enum import Enum
 import re
 import requests
+import json
 from conf import Configs
 
 
@@ -41,6 +42,14 @@ class Response:
         if self.http_code == 0:
             self.error = Error.dns_error
             self.error_text = "Name or service not known."
+        # 400 bad request
+        elif self.http_code == 400:
+            self.error = Error.http_bad_request
+            errors = json.loads(self.response)
+            if 'error' in errors:
+                self.error_text = errors['error']
+            if 'error_description' in errors:
+                self.error_description = errors['error_description']
         # 404 not found
         elif self.http_code == 404:
             self.error = Error.http_not_found
