@@ -22,6 +22,10 @@ class Configs():
     client = ""
     secret = ""
 
+    # oauth2 token
+    access_token = ""
+    expires = 0
+
 
 def set_config(name, value):
     if hasattr(Configs, name):
@@ -44,20 +48,26 @@ def __configs2dictionary():
 
     wallabag_api = OrderedDict()
     wallabag_api_oauth2 = OrderedDict()
+    wallabag_api_oauth2_token = OrderedDict()
 
     wallabag_api['serverurl'] = Configs.serverurl
     wallabag_api['username'] = Configs.username
     wallabag_api['password'] = Configs.password
+
     wallabag_api_oauth2['client'] = Configs.client
     wallabag_api_oauth2['secret'] = Configs.secret
     wallabag_api["oauth2"] = wallabag_api_oauth2
+
+    wallabag_api_oauth2_token["access_token"] = Configs.access_token
+    wallabag_api_oauth2_token["expires"] = Configs.expires
+    wallabag_api["oauth2"]["token"] = wallabag_api_oauth2_token
 
     return {"wallabag_api": wallabag_api}
 
 
 def __dicionary2config(configdict):
     for item in configdict:
-        if type(configdict[item]) is str:
+        if type(configdict[item]) is str or type(configdict[item]) is int:
             set_config(item, configdict[item])
         elif type(configdict[item]) is dict:
             __dicionary2config(configdict[item])
