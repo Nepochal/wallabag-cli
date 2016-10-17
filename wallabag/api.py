@@ -14,8 +14,10 @@ class Error(Enum):
     undefined = -1
     ok = 0
     dns_error = 1
-    http_not_found = 10
-    http_forbidden = 11
+    http_not_found = 404
+    http_forbidden = 403
+    http_bad_request = 400
+    unknown_error = 999
 
 
 class ApiMethod(Enum):
@@ -35,7 +37,6 @@ class Response:
         self.http_code = status_code
         self.response = http_response
 
-        # DNS/HTTP cases:
         # DNS not found
         if self.http_code == 0:
             self.error = Error.dns_error
@@ -51,6 +52,10 @@ class Response:
         # 200 okay
         elif self.http_code == 200:
             self.error = Error.ok
+        # unknown Error
+        else:
+            self.error = Error.unknown_error
+            self.error_text = "An unknown error occured."
 
     def is_rersponse_status_ok(self):
         return self.http_code == 200
