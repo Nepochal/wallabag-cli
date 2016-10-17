@@ -4,7 +4,7 @@ from sys import argv
 from wallabag_help import show as help
 import wallabag_config
 
-def checkCommands(command, options, allowed_options):
+def check_commands(command, options, allowed_options):
     for option in options:
         if not option in allowed_options:
             print("Invalid option {0} in command {1}.".format(option, command))
@@ -25,9 +25,15 @@ if len(argv) == 1 or argv[1] in {'-h', '--help'}:
 elif argv[1] in {'-v', '--version'}:
     print(PROGRAM_VERSION)
     exit(0)
+elif argv[1] in {'--about'}:
+    print("wallabag-cli")
+    print("© 2016 by Michael Scholz (https://mischolz.de)")
+    print()
+    print("This software is licensed under the GPLv3.")
+    exit(0)
 elif argv[1] == "config":
     command = "config"
-elif not argv[1][0] == '-':
+elif argv[1][0] != '-':
     print("Invalid command \"{0}\".".format(argv[1]))
     print("Use \"{0}\" to see a full list of commands.".format(argv[0]))
     exit(-1)
@@ -43,6 +49,6 @@ if command == "config":
     if "-h" in optionlist or "--help" in optionlist:
         help(argv[0], command)
         exit(0)
-    if not checkCommands(command, optionlist, allowed_options):
+    if not check_commands(command, optionlist, allowed_options):
         exit(-1)
     wallabag_config.start()

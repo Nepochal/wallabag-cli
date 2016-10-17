@@ -19,6 +19,7 @@ Commands:
 
 General Options:
   -h, --help     Show help.
+  --about        Show about information.
   -v, --version  Show version No.
 
 Use \"{0} <command> --help\" for further information.
