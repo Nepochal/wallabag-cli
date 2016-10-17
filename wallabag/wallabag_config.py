@@ -36,6 +36,21 @@ def start(ask_serverurl=True, ask_username=True, ask_password=True, ask_oauth2=T
     if secret != "":
         conf.set_config('secret', secret)
 
+    #username/password and client/secret check
+    testresponse = api.api_token()
+    if testresponse.hasError():
+        conf.save()
+        if testresponse.error == api.Error.http_bad_request:
+            print(testresponse.error_description)
+            if testresponse.error_text == "invalid_grant":
+                start(ask_serverurl=False, ask_oauth2=False)
+                return
+            elif testresponse.error_text == "invalid_client":
+                start(ask_serverurl=False, ask_username=False, ask_password=False)
+                return
+        print("An unknown error occured on the server side. Please try again later.")
+        exit(-1)
+
     print()
     if conf.save():
         print("The config was saved successfully.")

@@ -132,8 +132,8 @@ def api_version(different_url=None):
     return response
 
 
-def api_token(different_url=None):
-    url = __get_api_url(ApiMethod.token, different_url)
+def api_token():
+    url = __get_api_url(ApiMethod.token)
     data = "grant_type=password"
     data = "{0}&client_id={1}".format(data, Configs.client)
     data = "{0}&client_secret={1}".format(data, Configs.secret)
