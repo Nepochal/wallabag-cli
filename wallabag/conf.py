@@ -29,6 +29,9 @@ class Configs():
 
 
 def is_token_expired():
+    """
+    Returns if the last created oauth2 token is expired.
+    """
     return Configs.expires - time.time() < 0
 
 
@@ -42,7 +45,8 @@ def set_config(name, value):
 
 def get_config(name):
     """
-    Get a config value or None as default. Use "get_token()" instead if you wish to get a valid oauth2 token.
+    Get a config value or None as default. Use "api.get_token()" instead if you
+    wish to get a valid oauth2 token.
     """
     return getattr(Configs, name, None)
 
@@ -78,9 +82,10 @@ def __configs2dictionary():
 
 def __dicionary2config(configdict):
     for item in configdict:
-        if type(configdict[item]) is str or type(configdict[item]) is int or type(configdict[item]) is float:
+        if isinstance(configdict[item], str) or isinstance(configdict[item], int) or \
+        isinstance(configdict[item], float):
             set_config(item, configdict[item])
-        elif type(configdict[item]) is dict:
+        elif isinstance(configdict[item], dict):
             __dicionary2config(configdict[item])
 
 

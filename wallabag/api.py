@@ -2,10 +2,10 @@
 Wallabag API accesses.
 """
 from enum import Enum
+import json
 import re
 import requests
 import time
-import json
 import conf
 from conf import Configs
 
@@ -75,13 +75,13 @@ class Response:
         return self.error != Error.ok
 
 
-def __getApiUrl(api_method):
+def __get_api_url(api_method):
     if api_method in ApiMethod:
         return Configs.serverurl + api_method.value
     return None
 
 
-def __requestGet(url, data=None):
+def __request_get(url, data=None):
     ret = None
     request = None
 
@@ -120,27 +120,24 @@ def is_minimum_version(version_response):
         elif y < ty:
             return False
         else:
-            if z >= tz:
-                return True
-            else:
-                return False
+            return z >= tz
 
 
 def api_version():
-    url = __getApiUrl(ApiMethod.version)
-    response = __requestGet(url)
+    url = __get_api_url(ApiMethod.version)
+    response = __request_get(url)
     return response
 
 
 def api_token():
-    url = __getApiUrl(ApiMethod.token)
+    url = __get_api_url(ApiMethod.token)
     data = "grant_type=password"
     data = "{0}&client_id={1}".format(data, Configs.client)
     data = "{0}&client_secret={1}".format(data, Configs.secret)
     data = "{0}&username={1}".format(data, Configs.username)
     data = "{0}&password={1}".format(data, Configs.password)
 
-    response = __requestGet(url, data)
+    response = __request_get(url, data)
     return response
 
 
