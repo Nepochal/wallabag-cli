@@ -4,7 +4,9 @@ Wallabag API accesses.
 from enum import Enum
 import re
 import requests
+import time
 import json
+import conf
 from conf import Configs
 
 
@@ -124,13 +126,13 @@ def is_minimum_version(version_response):
                 return False
 
 
-def version():
+def api_version():
     url = __getApiUrl(ApiMethod.version)
     response = __requestGet(url)
     return response
 
 
-def token():
+def api_token():
     url = __getApiUrl(ApiMethod.token)
     data = "grant_type=password"
     data = "{0}&client_id={1}".format(data, Configs.client)
@@ -140,3 +142,33 @@ def token():
 
     response = __requestGet(url, data)
     return response
+
+
+def get_token(force_creation=False):
+    """
+    Returns a valid oauth token. Creates a new one if the old token is expired.
+
+    Parameters:
+    -----------
+    force_creation [optional]bool
+        Enforces the creation even if the old token is valid.
+
+    Returns:
+    --------
+    bool
+        Getting the token was successful.
+    string
+        A valid token or an error message.
+    """
+    if conf.is_token_expired() or force_creation:
+        response = api_token()
+        if not response.hasError():
+            content = json.loads(response.response)
+            Configs.access_token = content['access_token']
+            Configs.expires = time.time() + content['expires_in']
+            conf.save()
+            return True, Configs.access_token
+        else:
+            return False, response.error_text
+    else:
+        return True, Configs.access_token

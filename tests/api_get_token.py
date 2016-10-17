@@ -5,7 +5,7 @@ import api
 
 conf.load()
 
-response = api.token()
+response = api.api_token()
 
 print("HTTP Status: " + str(response.http_code))
 print("Error: " + str(response.error))

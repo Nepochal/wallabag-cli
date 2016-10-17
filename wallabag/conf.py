@@ -2,6 +2,7 @@
 Settings and configuration for wallabag-cli.
 """
 import json
+import time
 from collections import OrderedDict
 from pathlib import Path
 
@@ -27,12 +28,22 @@ class Configs():
     expires = 0
 
 
+def is_token_expired():
+    return Configs.expires - time.time() < 0
+
+
 def set_config(name, value):
+    """
+    Sets a config value to a given value without checking validity.
+    """
     if hasattr(Configs, name):
         setattr(Configs, name, value)
 
 
 def get_config(name):
+    """
+    Get a config value or None as default. Use "get_token()" instead if you wish to get a valid oauth2 token.
+    """
     return getattr(Configs, name, None)
 
 
@@ -67,7 +78,7 @@ def __configs2dictionary():
 
 def __dicionary2config(configdict):
     for item in configdict:
-        if type(configdict[item]) is str or type(configdict[item]) is int:
+        if type(configdict[item]) is str or type(configdict[item]) is int or type(configdict[item]) is float:
             set_config(item, configdict[item])
         elif type(configdict[item]) is dict:
             __dicionary2config(configdict[item])
