@@ -45,7 +45,6 @@ def start(ask_serverurl=True, ask_username=True, ask_password=True, ask_oauth2=T
 
 
 def __serverurl(forced):
-    error = False
     print()
     print("Enter the url of your Wallabag instance.")
     print("e.g. https://www.wallabag.com")
@@ -56,19 +55,20 @@ def __serverurl(forced):
     # trim leading and following spaces
     value = value.strip()
 
+    if value == "":
+        if forced:
+            return __serverurl(forced)
+        else:
+            return value
+
     # remove following slash
     if value[len(value) - 1] == '/':
         value = value[0:len(value) - 1]
-
-    if forced and value == "":
-        error = True
 
     # add http:// if there is no http:// or https://
     if not re.compile("(?i)https?:\\/\\/.+").match(value):
         value = "http://" + value
 
-    if error:
-        return __serverurl(forced)
     return value
 
 
