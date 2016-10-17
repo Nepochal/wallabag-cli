@@ -15,10 +15,11 @@ Usage:
   {0} <command> [options]
 
 Commands:
-  config      Start the configuration.
+  config         Start the configuration.
 
 General Options:
-  -h, --help  Show help.
+  -h, --help     Show help.
+  -v, --version  Show version No.
 
 Use \"{0} <command> --help\" for further information.
 And don't forget to be excellent to each other!
@@ -34,7 +35,7 @@ Description:
   Start the configuration.
 
 General Options:
-  -h, --help  Show help.
+  -h, --help  Show help
 """.format(startscript)
     index['config'] = config_txt
 

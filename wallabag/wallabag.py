@@ -4,7 +4,6 @@ from sys import argv
 from wallabag_help import show as help
 import wallabag_config
 
-
 def checkCommands(command, options, allowed_options):
     for option in options:
         if not option in allowed_options:
@@ -15,12 +14,16 @@ def checkCommands(command, options, allowed_options):
             return False
     return True
 
+PROGRAM_VERSION = "0.0.0-alpha"
 
 command = None
 
 # Determine command or general standalone option
 if len(argv) == 1 or argv[1] in {'-h', '--help'}:
     help(argv[0])
+    exit(0)
+elif argv[1] in {'-v', '--version'}:
+    print(PROGRAM_VERSION)
     exit(0)
 elif argv[1] == "config":
     command = "config"
