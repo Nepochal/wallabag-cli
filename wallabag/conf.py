@@ -2,6 +2,7 @@
 Settings and configuration for wallabag-cli.
 """
 import json
+import time
 from collections import OrderedDict
 from pathlib import Path
 
@@ -22,13 +23,31 @@ class Configs():
     client = ""
     secret = ""
 
+    # oauth2 token
+    access_token = ""
+    expires = 0
+
+
+def is_token_expired():
+    """
+    Returns if the last created oauth2 token is expired.
+    """
+    return Configs.expires - time.time() < 0
+
 
 def set_config(name, value):
+    """
+    Sets a config value to a given value without checking validity.
+    """
     if hasattr(Configs, name):
         setattr(Configs, name, value)
 
 
 def get_config(name):
+    """
+    Get a config value or None as default. Use "api.get_token()" instead if you
+    wish to get a valid oauth2 token.
+    """
     return getattr(Configs, name, None)
 
 
@@ -44,22 +63,29 @@ def __configs2dictionary():
 
     wallabag_api = OrderedDict()
     wallabag_api_oauth2 = OrderedDict()
+    wallabag_api_oauth2_token = OrderedDict()
 
     wallabag_api['serverurl'] = Configs.serverurl
     wallabag_api['username'] = Configs.username
     wallabag_api['password'] = Configs.password
+
     wallabag_api_oauth2['client'] = Configs.client
     wallabag_api_oauth2['secret'] = Configs.secret
     wallabag_api["oauth2"] = wallabag_api_oauth2
+
+    wallabag_api_oauth2_token["access_token"] = Configs.access_token
+    wallabag_api_oauth2_token["expires"] = Configs.expires
+    wallabag_api["oauth2"]["token"] = wallabag_api_oauth2_token
 
     return {"wallabag_api": wallabag_api}
 
 
 def __dicionary2config(configdict):
     for item in configdict:
-        if type(configdict[item]) is str:
+        if isinstance(configdict[item], str) or isinstance(configdict[item], int) or \
+        isinstance(configdict[item], float):
             set_config(item, configdict[item])
-        elif type(configdict[item]) is dict:
+        elif isinstance(configdict[item], dict):
             __dicionary2config(configdict[item])
 
 
