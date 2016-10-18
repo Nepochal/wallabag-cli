@@ -178,8 +178,13 @@ def api_token():
     return response
 
 
-def api_add_entry(url):
-    pass
+def api_add_entry(targeturl):
+    url = __get_api_url(ApiMethod.add_entry)
+    header = __get_authorization_header()
+    data = dict()
+    data['url'] = targeturl
+    response = __request_post(url, header, data)
+    return response
 
 
 def get_token(force_creation=False):
