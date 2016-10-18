@@ -85,15 +85,12 @@ def __get_api_url(api_method, different_url=None):
     return None
 
 
-def __request_get(url, data=None):
+def __request_get(url, **data):
     ret = None
     request = None
 
     try:
-        if data == None:
-            request = requests.get(url)
-        else:
-            request = requests.get(url, data)
+        request = requests.get(url, data)
         ret = Response(request.status_code, request.text)
     # dns error
     except requests.exceptions.ConnectionError:
@@ -135,13 +132,14 @@ def api_version(different_url=None):
 
 def api_token():
     url = __get_api_url(ApiMethod.token)
-    data = "grant_type=password"
-    data = "{0}&client_id={1}".format(data, Configs.client)
-    data = "{0}&client_secret={1}".format(data, Configs.secret)
-    data = "{0}&username={1}".format(data, Configs.username)
-    data = "{0}&password={1}".format(data, Configs.password)
+    data = dict()
+    data['grant_type'] = "password"
+    data['client_id'] = Configs.client
+    data['client_secret'] = Configs.secret
+    data['username'] = Configs.username
+    data['password'] = Configs.password
 
-    response = __request_get(url, data)
+    response = __request_get(url, **data)
     return response
 
 
