@@ -85,6 +85,14 @@ def __get_api_url(api_method, different_url=None):
     return None
 
 
+def __get_authorization_header():
+    success, token = get_token()
+    if not success:
+        return None
+    else:
+        return {'Authorization': "Bearer {0}".format(token)}
+
+
 def __request_get(url, **data):
     ret = None
     request = None
@@ -93,7 +101,7 @@ def __request_get(url, **data):
         request = requests.get(url, data)
         ret = Response(request.status_code, request.text)
     # dns error
-    except requests.exceptions.ConnectionError:
+    except (requests.exceptions.ConnectionError, requests.exceptions.MissingSchema):
         ret = Response(0, None)
     return ret
 
@@ -106,7 +114,7 @@ def __request_post(url, headers=None, data=None):
         request = requests.post(url, data=data, headers=headers)
         ret = Response(request.status_code, request.text)
     # dns error
-    except requests.exceptions.ConnectionError:
+    except (requests.exceptions.ConnectionError, requests.exceptions.MissingSchema):
         ret = Response(0, None)
     return ret
 
