@@ -25,6 +25,7 @@ class Error(Enum):
 
 
 class ApiMethod(Enum):
+    add_entry = "/api/entries"
     token = "/oauth/v2/token"
     version = "/api/version"
 
@@ -142,6 +143,10 @@ def api_token():
 
     response = __request_get(url, data)
     return response
+
+
+def api_add_entry(url):
+    pass
 
 
 def get_token(force_creation=False):
