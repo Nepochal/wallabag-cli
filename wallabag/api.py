@@ -18,9 +18,10 @@ class Error(Enum):
     undefined = -1
     ok = 0
     dns_error = 1
-    http_not_found = 404
-    http_forbidden = 403
     http_bad_request = 400
+    http_unauthorized = 401
+    http_forbidden = 403
+    http_not_found = 404
     unknown_error = 999
 
 
@@ -54,14 +55,22 @@ class Response:
                 self.error_text = errors['error']
             if 'error_description' in errors:
                 self.error_description = errors['error_description']
-        # 404 not found
-        elif self.http_code == 404:
-            self.error = Error.http_not_found
-            self.error_text = "404: API was not found."
+        # 401 unauthorized
+        elif self.http_code == 401:
+            self.error = Error.http_unauthorized
+            errors = json.loads(self.response)
+            if 'error' in errors:
+                self.error_text = errors['error']
+            if 'error_description' in errors:
+                self.error_description = errors['error_description']
         # 403 forbidden
         elif self.http_code == 403:
             self.error = Error.http_forbidden
             self.error_text = "403: Could not reach API due to rights issues."
+        # 404 not found
+        elif self.http_code == 404:
+            self.error = Error.http_not_found
+            self.error_text = "404: API was not found."
         # 200 okay
         elif self.http_code == 200:
             self.error = Error.ok
