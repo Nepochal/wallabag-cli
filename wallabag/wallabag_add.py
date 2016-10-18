@@ -23,9 +23,15 @@ def add(target_url):
         print("Error: Invalid url to add.")
         exit(-1)
 
-    request = api.api_add_entry(target_url)
-    if(request.hasError()):
-        print("Error")
-    else:
-        print("Entry successfully added")
-        exit(0)
+    try:
+        request = api.api_add_entry(target_url)
+        if(request.hasError()):
+            print("Error: {0} - {1}".format(request.error_text,
+                                            request.error_description))
+            exit(-1)
+        else:
+            print("Entry successfully added")
+            exit(0)
+    except api.OAuthException as e:
+        print("Error: {0}".format(e.text))
+        exit(-1)

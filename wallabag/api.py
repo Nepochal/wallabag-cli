@@ -14,6 +14,10 @@ MINIMUM_API_VERSION = 2, 1, 1
 MINIMUM_API_VERSION_HR = "2.1.1"
 
 
+class OAuthException(Exception):
+    pass
+
+
 class Error(Enum):
     undefined = -1
     ok = 0
@@ -95,11 +99,13 @@ def __get_api_url(api_method, different_url=None):
 
 
 def __get_authorization_header():
-    success, token = get_token()
+    success, token_or_error = get_token()
     if not success:
-        return None
+        e = OAuthException
+        e.text = token_or_error
+        raise e
     else:
-        return {'Authorization': "Bearer {0}".format(token)}
+        return {'Authorization': "Bearer {0}".format(token_or_error)}
 
 
 def __request_get(url, **data):
@@ -212,6 +218,9 @@ def get_token(force_creation=False):
             conf.save()
             return True, Configs.access_token
         else:
-            return False, response.error_text
+            if response.error_description == "":
+                return False, response.error_text
+            else:
+                return False, "{0} - {1}".format(response.error_text, response.error_description)
     else:
         return True, Configs.access_token

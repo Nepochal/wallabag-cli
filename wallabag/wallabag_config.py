@@ -36,7 +36,7 @@ def start(ask_serverurl=True, ask_username=True, ask_password=True, ask_oauth2=T
     if secret != "":
         conf.set_config('secret', secret)
 
-    #username/password and client/secret check
+    # username/password and client/secret check
     testresponse = api.api_token()
     if testresponse.hasError():
         conf.save()
