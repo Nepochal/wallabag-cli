@@ -21,6 +21,7 @@ def add(target_url):
 
     if not valid_url:
         print("Error: Invalid url to add.")
+        print()
         exit(-1)
 
     try:
@@ -34,4 +35,5 @@ def add(target_url):
             exit(0)
     except api.OAuthException as e:
         print("Error: {0}".format(e.text))
+        print()
         exit(-1)

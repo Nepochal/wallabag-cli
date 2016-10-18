@@ -50,11 +50,12 @@ if command == "config":
 
 if command == "add":
     if "-h" in argv[2:len(argv)] or "--help" in argv[2:len(argv)]:
-        # open help
+        help(argv[0], command)
         exit(0)
 
     if len(argv) < 3:
         print("Error: Missing URL to add")
+        print()
         exit(-1)
 
     optionlist = argv[2:len(argv) - 1]

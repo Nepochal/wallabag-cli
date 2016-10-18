@@ -35,10 +35,23 @@ Usage:
 Description:
   Start the configuration.
 
-General Options:
+Options:
   -h, --help  Show help
 """.format(startscript)
     index['config'] = config_txt
+
+    # config
+    add_txt = """
+Usage:
+  {0} add [options] <url>
+
+Description:
+  Add a new link to wallabag.
+
+Options:
+  -h, --help  Show help
+""".format(startscript)
+    index['add'] = add_txt
 
     if not command in index:
         print("Error: Invalid command \"{0}\"!".format(command))
