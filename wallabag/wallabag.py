@@ -4,6 +4,7 @@ import getopt
 from sys import argv
 from wallabag_help import show as help
 import wallabag_config
+import wallabag_add
 
 PROGRAM_VERSION = "0.0.0-alpha"
 
@@ -22,8 +23,8 @@ elif argv[1] in {'--about'}:
     print()
     print("This software is licensed under the GPLv3.")
     exit(0)
-elif argv[1] == "config":
-    command = "config"
+elif argv[1] in {"config", "add"}:
+    command = argv[1]
 elif argv[1][0] != '-':
     print("Error: Invalid command \"{0}\".".format(argv[1]))
     print("Use \"{0}\" to see a full list of commands.".format(argv[0]))
@@ -33,9 +34,8 @@ else:
     print("Use \"{0}\" to see a full list of options.".format(argv[0]))
     exit(-1)
 
-optionlist = argv[2:len(argv)]
-
 if command == "config":
+    optionlist = argv[2:len(argv)]
     try:
         args = getopt.getopt(optionlist, "h", ["help"])[0]
     except getopt.GetoptError as e:
@@ -47,3 +47,25 @@ if command == "config":
             help(argv[0], command)
             exit(0)
     wallabag_config.start()
+
+if command == "add":
+    if "-h" in argv[2:len(argv)] or "--help" in argv[2:len(argv)]:
+        # open help
+        exit(0)
+
+    if len(argv) < 3:
+        print("Error: Missing URL to add")
+        exit(-1)
+
+    optionlist = argv[2:len(argv) - 1]
+    url = argv[len(argv) - 1]
+
+    try:
+        args = getopt.getopt(optionlist, "h", ["help"])[0]
+    except getopt.GetoptError as e:
+        print("Error: Invalid option \"{0}\"".format(e.opt))
+        print()
+        exit(-1)
+    for opt, arg in args:
+        pass
+    wallabag_add.add(url)
