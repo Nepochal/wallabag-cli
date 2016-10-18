@@ -98,6 +98,19 @@ def __request_get(url, **data):
     return ret
 
 
+def __request_post(url, headers=None, data=None):
+    ret = None
+    request = None
+
+    try:
+        request = requests.post(url, data=data, headers=headers)
+        ret = Response(request.status_code, request.text)
+    # dns error
+    except requests.exceptions.ConnectionError:
+        ret = Response(0, None)
+    return ret
+
+
 def is_minimum_version(version_response):
     versionstring = version_response.response
 
