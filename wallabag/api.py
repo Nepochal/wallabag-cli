@@ -128,6 +128,11 @@ def __request_post(url, headers=None, data=None):
     return ret
 
 
+def is_valid_url(url):
+    response = __request_get(url)
+    return not response.hasError()
+
+
 def is_minimum_version(version_response):
     versionstring = version_response.response
 
