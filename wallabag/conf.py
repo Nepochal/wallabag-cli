@@ -89,6 +89,15 @@ def __dicionary2config(configdict):
             __dicionary2config(configdict[item])
 
 
+def is_valid(path=CONFIG_FILENAME):
+    if not exist(path):
+        return False
+    load(path)
+    if "" in [Configs.serverurl, Configs.username, Configs.password, Configs.client, Configs.secret]:
+        return False
+    return True
+
+
 def exist(path=CONFIG_FILENAME):
     file = Path(path)
     return file.is_file()
