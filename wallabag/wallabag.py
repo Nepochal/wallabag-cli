@@ -9,6 +9,7 @@ import wallabag_add
 PROGRAM_VERSION = "0.0.0-alpha"
 
 command = None
+need_config = False
 
 # Determine command or general standalone option
 if len(argv) == 1 or argv[1] in {'-h', '--help'}:
@@ -23,8 +24,9 @@ elif argv[1] in {'--about'}:
     print()
     print("This software is licensed under the GPLv3.")
     exit(0)
-elif argv[1] in {"config", "add"}:
+elif argv[1] in ["config", "add"]:
     command = argv[1]
+    need_config = command != "config"
 elif argv[1][0] != '-':
     print("Error: Invalid command \"{0}\".".format(argv[1]))
     print("Use \"{0}\" to see a full list of commands.".format(argv[0]))
@@ -33,6 +35,14 @@ else:
     print("Invalid option \"{0}\".".format(argv[1]))
     print("Use \"{0}\" to see a full list of options.".format(argv[0]))
     exit(-1)
+
+if need_config:
+    i = input(
+        "Could not find a valid config. Would you like to create it now? [Y/n] ")
+    if str.lower(i) in ["y", "yes", ""]:
+        wallabag_config.start()
+    else:
+        exit(0)
 
 if command == "config":
     optionlist = argv[2:len(argv)]
@@ -48,7 +58,7 @@ if command == "config":
             exit(0)
     wallabag_config.start()
 
-if command == "add":
+elif command == "add":
     if "-h" in argv[2:len(argv)] or "--help" in argv[2:len(argv)]:
         help(argv[0], command)
         exit(0)
