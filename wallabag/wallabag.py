@@ -6,7 +6,7 @@ from wallabag_help import show as help
 import wallabag_config
 import wallabag_add
 
-PROGRAM_VERSION = "0.0.0-alpha"
+PROGRAM_VERSION = "0.1.0-alpha"
 
 command = None
 need_config = False
