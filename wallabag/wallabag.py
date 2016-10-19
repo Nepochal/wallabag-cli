@@ -5,6 +5,7 @@ from sys import argv
 from wallabag_help import show as help
 import wallabag_config
 import wallabag_add
+import conf
 
 PROGRAM_VERSION = "0.1.0-alpha"
 
@@ -36,7 +37,7 @@ else:
     print("Use \"{0}\" to see a full list of options.".format(argv[0]))
     exit(-1)
 
-if need_config:
+if need_config and not conf.is_valid():
     i = input(
         "Could not find a valid config. Would you like to create it now? [Y/n] ")
     if str.lower(i) in ["y", "yes", ""]:
