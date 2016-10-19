@@ -58,7 +58,7 @@ if command == "config":
             exit(0)
     wallabag_config.start()
 
-elif command == "add":
+if command == "add":
     if "-h" in argv[2:len(argv)] or "--help" in argv[2:len(argv)]:
         help(argv[0], command)
         exit(0)

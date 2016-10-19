@@ -54,7 +54,6 @@ def start(ask_serverurl=True, ask_username=True, ask_password=True, ask_oauth2=T
     print()
     if conf.save():
         print("The config was saved successfully.")
-        exit(0)
     else:
         print("An error occured while saving the configuration. Please try again.")
         exit(-1)
