@@ -1,10 +1,24 @@
-#Linux/KDE5
+# Linux/KDE5
 .directory
 
-#python
+# python
 __pycache__/
 *.py[cod]
 *$py.class
 
-#wallabag-cli
+# virtualenv
+.venv/
+venv/
+ENV/
+.Python
+[Bb]in
+[Ii]nclude
+[Ll]ib
+[Ll]ib64
+[Ll]ocal
+[Ss]cripts
+pyvenv.cfg
+pip-selfcheck.json
+
+# wallabag-cli
 .wallabag-cli
