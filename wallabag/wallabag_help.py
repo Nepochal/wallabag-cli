@@ -16,6 +16,7 @@ Usage:
 
 Commands:
   config         Start the configuration.
+  add            Add a new link to wallabag.
 
 General Options:
   -h, --help     Show help.
