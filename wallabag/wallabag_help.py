@@ -49,7 +49,9 @@ Description:
   Add a new link to wallabag.
 
 Options:
-  -h, --help  Show help
+  -h, --help      Show help
+  -p, --password  Change the wallabag password
+  -o, --oauth     Change the wallabag client credentials
 """.format(startscript)
     index['add'] = add_txt
 
