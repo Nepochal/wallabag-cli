@@ -71,13 +71,22 @@ if command == "add":
 
     optionlist = argv[2:len(argv) - 1]
     url = argv[len(argv) - 1]
+    title = None
+    star = False
+    read = False
 
     try:
-        args = getopt.getopt(optionlist, "h", ["help"])[0]
+        args = getopt.getopt(optionlist, "ht:sr", [
+            "help", "title=", "starred", "read"])[0]
     except getopt.GetoptError as e:
         print("Error: Invalid option \"{0}\"".format(e.opt))
         print()
         exit(-1)
     for opt, arg in args:
-        pass
-    wallabag_add.add(url)
+        if opt in ('-t', '--title'):
+            title = arg
+        if opt in ('-s', '--starred'):
+            star = True
+        if opt in ('-r', '--read'):
+            read = True
+    wallabag_add.add(url, title, star, read)
