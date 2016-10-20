@@ -6,7 +6,7 @@ import api
 import conf
 
 
-def add(target_url):
+def add(target_url, title=None, star=False, read=False):
     conf.load()
 
     valid_url = False
@@ -25,7 +25,7 @@ def add(target_url):
         exit(-1)
 
     try:
-        request = api.api_add_entry(target_url)
+        request = api.api_add_entry(target_url, title, star, read)
         if(request.hasError()):
             print("Error: {0} - {1}".format(request.error_text,
                                             request.error_description))
