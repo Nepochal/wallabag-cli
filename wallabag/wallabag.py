@@ -47,8 +47,12 @@ if need_config and not conf.is_valid():
 
 if command == "config":
     optionlist = argv[2:len(argv)]
+    password = False
+    oauth = False
+
     try:
-        args = getopt.getopt(optionlist, "h", ["help"])[0]
+        args = getopt.getopt(optionlist, "hcpo", [
+                             "help", "check", "password", "oauth"])[0]
     except getopt.GetoptError as e:
         print("Error: Invalid option \"{0}\"".format(e.opt))
         print()
@@ -57,7 +61,21 @@ if command == "config":
         if opt in ('-h', '--help'):
             help(argv[0], command)
             exit(0)
-    wallabag_config.start()
+        if opt in ('-c', '--check'):
+            wallabag_config.check()
+            exit(0)
+        elif opt in ('-p', '--password'):
+            password = True
+        elif opt in ('-o', '--oauth'):
+            oauth = True
+    if password or oauth:
+        if not conf.is_valid():
+            print("Invalid existing config. Therefore you have to enter all values.")
+            wallabag_config.start()
+        else:
+            wallabag_config.start(False, False, password, oauth)
+    else:
+        wallabag_config.start()
 
 if command == "add":
     if "-h" in argv[2:len(argv)] or "--help" in argv[2:len(argv)]:

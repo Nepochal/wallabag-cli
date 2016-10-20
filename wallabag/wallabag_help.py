@@ -37,11 +37,14 @@ Description:
   Start the configuration.
 
 Options:
-  -h, --help  Show help
+  -h, --help      Show help
+  -c, --check     Check the config for errors
+  -p, --password  Change the wallabag password
+  -o, --oauth     Change the wallabag client credentials
 """.format(startscript)
     index['config'] = config_txt
 
-    # config
+    # add
     add_txt = """
 Usage:
   {0} add [options] <url>
