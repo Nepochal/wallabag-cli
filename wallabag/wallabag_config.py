@@ -59,6 +59,31 @@ def start(ask_serverurl=True, ask_username=True, ask_password=True, ask_oauth2=T
         exit(-1)
 
 
+def check():
+    if not conf.is_valid():
+        print("The config is missing or incomplete.")
+        return False
+
+    conf.load()
+
+    response = api.api_version()
+    if response.hasError():
+        print("The server or the API is not reachable.")
+        return False
+
+    if not api.is_minimum_version(response):
+        print("The version of the wallabag instance is too old.")
+        return False
+
+    response = api.api_token()
+    if response.hasError():
+        print(response.error_description)
+        return False
+
+    print("The config is suitable.")
+    return True
+
+
 def __serverurl(forced):
     print()
     print("Enter the url of your Wallabag instance.")
