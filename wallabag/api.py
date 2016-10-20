@@ -184,11 +184,17 @@ def api_token():
     return response
 
 
-def api_add_entry(targeturl):
+def api_add_entry(targeturl, title=None, star=False, read=False):
     url = __get_api_url(ApiMethod.add_entry)
     header = __get_authorization_header()
     data = dict()
     data['url'] = targeturl
+    if title != None:
+        data['title'] = title
+    if star:
+        data['starred'] = 1
+    if read:
+        data['archive'] = 1
     response = __request_post(url, header, data)
     return response
 
