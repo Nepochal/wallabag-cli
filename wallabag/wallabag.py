@@ -51,8 +51,8 @@ if command == "config":
     oauth = False
 
     try:
-        args = getopt.getopt(optionlist, "hpo", [
-                             "help", "password", "oauth"])[0]
+        args = getopt.getopt(optionlist, "hcpo", [
+                             "help", "check", "password", "oauth"])[0]
     except getopt.GetoptError as e:
         print("Error: Invalid option \"{0}\"".format(e.opt))
         print()
@@ -60,6 +60,9 @@ if command == "config":
     for opt, arg in args:
         if opt in ('-h', '--help'):
             help(argv[0], command)
+            exit(0)
+        if opt in ('-c', '--check'):
+            wallabag_config.check()
             exit(0)
         elif opt in ('-p', '--password'):
             password = True
