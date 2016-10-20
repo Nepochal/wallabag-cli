@@ -66,7 +66,11 @@ if command == "config":
         elif opt in ('-o', '--oauth'):
             oauth = True
     if password or oauth:
-        wallabag_config.start(False, False, password, oauth)
+        if not conf.is_valid():
+            print("Invalid existing config. Therefore you have to enter all values.")
+            wallabag_config.start()
+        else:
+            wallabag_config.start(False, False, password, oauth)
     else:
         wallabag_config.start()
 
