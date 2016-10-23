@@ -4,6 +4,7 @@ Module for adding new entries
 import re
 import api
 import conf
+import json
 
 
 def add(target_url, title=None, star=False, read=False):
@@ -21,6 +22,23 @@ def add(target_url, title=None, star=False, read=False):
 
     if not valid_url:
         print("Error: Invalid url to add.")
+        print()
+        exit(-1)
+
+    try:
+        request = api.api_entry_exists(target_url)
+        if(request.hasError()):
+            print("Error: {0} - {1}".format(request.error_text,
+                                            request.error_description))
+            exit(-1)
+        response = json.loads(request.response)
+        print(response['exists'])
+        if response['exists'] == True:
+            print("The url was already saved.")
+            exit(0)
+
+    except api.OAuthException as e:
+        print("Error: {0}".format(e.text))
         print()
         exit(-1)
 
