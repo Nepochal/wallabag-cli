@@ -109,12 +109,12 @@ def __get_authorization_header():
         return {'Authorization': "Bearer {0}".format(token_or_error)}
 
 
-def __request_get(url, headers=None, params=None, **data):
+def __request_get(url, headers=None, params=None):
     ret = None
     request = None
 
     try:
-        request = requests.get(url, headers=headers, params=params, **data)
+        request = requests.get(url, headers=headers, params=params)
         ret = Response(request.status_code, request.text)
     # dns error
     except (requests.exceptions.ConnectionError, requests.exceptions.MissingSchema):
@@ -181,8 +181,7 @@ def api_token():
     data['username'] = Configs.username
     data['password'] = Configs.password
 
-    response = __request_get(url, **data)
-    print(response)
+    response = __request_get(url, params=data)
     return response
 
 

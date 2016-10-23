@@ -32,7 +32,6 @@ def add(target_url, title=None, star=False, read=False):
                                             request.error_description))
             exit(-1)
         response = json.loads(request.response)
-        print(response['exists'])
         if response['exists'] == True:
             print("The url was already saved.")
             exit(0)
