@@ -31,6 +31,7 @@ class Error(Enum):
 
 class ApiMethod(Enum):
     add_entry = "/api/entries"
+    entry_exists = "/api/entries/exists"
     token = "/oauth/v2/token"
     version = "/api/version"
 
@@ -108,12 +109,12 @@ def __get_authorization_header():
         return {'Authorization': "Bearer {0}".format(token_or_error)}
 
 
-def __request_get(url, **data):
+def __request_get(url, headers=None, params=None, **data):
     ret = None
     request = None
 
     try:
-        request = requests.get(url, data)
+        request = requests.get(url, headers=headers, params=params, **data)
         ret = Response(request.status_code, request.text)
     # dns error
     except (requests.exceptions.ConnectionError, requests.exceptions.MissingSchema):
@@ -181,15 +182,31 @@ def api_token():
     data['password'] = Configs.password
 
     response = __request_get(url, **data)
+    print(response)
     return response
 
 
-def api_add_entry(targeturl):
+def api_add_entry(targeturl, title=None, star=False, read=False):
     url = __get_api_url(ApiMethod.add_entry)
     header = __get_authorization_header()
     data = dict()
     data['url'] = targeturl
+    if title != None:
+        data['title'] = title
+    if star:
+        data['starred'] = 1
+    if read:
+        data['archive'] = 1
     response = __request_post(url, header, data)
+    return response
+
+
+def api_entry_exists(url):
+    apiurl = __get_api_url(ApiMethod.entry_exists)
+    header = __get_authorization_header()
+    data = dict()
+    data['url'] = url
+    response = __request_get(apiurl, headers=header, params=data)
     return response
 
 

@@ -53,7 +53,10 @@ Description:
   Add a new link to wallabag.
 
 Options:
-  -h, --help  Show help
+  -h, --help           Show help
+  -t, --title <title>  Add a custom title
+  -s, --starred        Mark as starred
+  -r, --read           Mark as read
 """.format(startscript)
     index['add'] = add_txt
 
