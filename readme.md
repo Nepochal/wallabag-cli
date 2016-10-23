@@ -15,4 +15,22 @@ Wallabag-cli is in a very early stage of development and not suitable for produc
 - Install python 3.4.2 or above
 - Install all missing dependencies via pip  
   `pip install -r requirements.txt`
-- Run wallabag.py
+- Create a config file  
+  `wallabag.py config`
+- Run the help to see how to get started  
+  `wallabag.py --help`
+
+------
+
+**Already implemented features**
+
+- Add new entries
+
+**Missing features**
+
+- Delete entries
+- Mark existing entries as read
+- Mark existing entries as starred
+- List entries (read, unread, starred, all)
+- Show entry
+- Curses interface for interactive use
