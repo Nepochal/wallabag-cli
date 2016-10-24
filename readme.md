@@ -11,14 +11,19 @@ Wallabag-cli is in a very early stage of development and not suitable for produc
 
 ------
 
-**How to build/use:**
+**How to use:**
 - Install python 3.4.2 or above
 - Install all missing dependencies via pip  
   `pip install -r requirements.txt`
+<<<<<<< Updated upstream
 - Create a config file  
   `wallabag.py config`
 - Run the help to see how to get started  
   `wallabag.py --help`
+- Run wallabag.py
+
+For a description on how to compile the whole project into a single binary look into the [build documentation](https://github.com/Nepochal/wallabag-cli/blob/master/docs/build.md).
+
 
 ------
 
