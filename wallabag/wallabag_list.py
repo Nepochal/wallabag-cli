@@ -5,6 +5,7 @@ import api
 import conf
 import entry
 import json
+import os
 from sys import exit
 
 
@@ -29,14 +30,43 @@ def list_entries():
 
 def print_entries(entries):
 
+    title_maxlength = os.get_terminal_size().columns
+    size_entry_id = 0
+    show_read_column = False
+    show_starred_column = False
+
     if len(entries) > 0:
         size_entry_id = len(str(entries[0].entry_id))
 
     for item in entries:
+        if(item.read):
+            show_read_column = True
+        if(item.starred):
+            show_starred_column = True
+
+    for item in entries:
         entry_id = str(item.entry_id).rjust(size_entry_id)
+
+        read = " "
+        if item.read:
+            read = "✔"
+
+        starred = " "
+        if item.starred:
+            starred = "*"
+
         title = item.title
 
-        line = "{0} {1}".format(entry_id, title)
+        line = entry_id
+        if show_read_column or show_starred_column:
+            line = line + " "
+            if show_read_column:
+                line = line + read
+            if show_starred_column:
+                line = line + starred
+
+        title = title[0:title_maxlength - len(line) - 1]
+        line = line + " {0}".format(title)
         print(line)
 
 list_entries()
