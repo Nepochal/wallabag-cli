@@ -8,7 +8,7 @@ import json
 from sys import exit
 
 
-def list():
+def list_entries():
     conf.load()
 
     try:
@@ -27,4 +27,4 @@ def list():
         print(item["title"].replace("\n", ""))
 
 
-list()
+list_entries()
