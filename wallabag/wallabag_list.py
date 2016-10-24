@@ -3,7 +3,7 @@ List existing entries
 """
 import api
 import conf
-#import json
+import entry
 import json
 from sys import exit
 
@@ -23,8 +23,9 @@ def list_entries():
         print()
         exit(-1)
 
-    for item in response['_embedded']["items"]:
-        print(item["title"].replace("\n", ""))
+    entries = entry.entrylist(response['_embedded']["items"])
+    for item in entries:
+        print(item.title)
 
 
 list_entries()
