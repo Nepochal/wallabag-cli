@@ -16,7 +16,8 @@ Usage:
 
 Commands:
   config         Start the configuration.
-  add            Add a new link to wallabag.
+  add            Add a new entry to wallabag.
+  list           List the entries on the wallabag account.
 
 General Options:
   -h, --help     Show help.
@@ -59,6 +60,19 @@ Options:
   -r, --read           Mark as read
 """.format(startscript)
     index['add'] = add_txt
+
+    # list
+    list_txt = """
+Usage:
+  {0} list [options]
+
+Description:
+  Gives a summary of entries in wallabag. Use options to filter the results.
+
+Options:
+  -h, --help  Show help
+""".format(startscript)
+    index['list'] = list_txt
 
     if not command in index:
         print("Error: Invalid command \"{0}\"!".format(command))
