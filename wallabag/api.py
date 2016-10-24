@@ -210,10 +210,24 @@ def api_entry_exists(url):
     return response
 
 
-def api_list_entries():
+def api_list_entries(read=False, starred=None):
     url = __get_api_url(ApiMethod.list_entries)
     header = __get_authorization_header()
-    response = __request_get(url, headers=header)
+    params = dict()
+
+    if read != None:
+        if read:
+            params['archive'] = 1
+        else:
+            params['archive'] = 0
+
+    if starred != None:
+        if starred:
+            params['starred'] = 1
+        else:
+            params['starred'] = 0
+
+    response = __request_get(url, headers=header, params=params)
     return response
 
 
