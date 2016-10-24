@@ -20,5 +20,12 @@ ENV/
 pyvenv.cfg
 pip-selfcheck.json
 
+# pyinstaller
+build/
+dist/
+*.manifest
+*.spec
+
 # wallabag-cli
 .wallabag-cli
+.wallabag-cli.bak
