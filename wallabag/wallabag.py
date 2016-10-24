@@ -6,6 +6,7 @@ from wallabag_help import show as help
 import wallabag_config
 import wallabag_add
 import conf
+from sys import exit
 
 PROGRAM_VERSION = "0.2.0-alpha"
 

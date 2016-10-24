@@ -5,6 +5,7 @@ import json
 import time
 from collections import OrderedDict
 from pathlib import Path
+from sys import exit
 
 CONFIG_FILENAME = ".wallabag-cli"
 

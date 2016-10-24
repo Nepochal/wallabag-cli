@@ -5,6 +5,7 @@ import re
 import api
 import conf
 import json
+from sys import exit
 
 
 def add(target_url, title=None, star=False, read=False):
