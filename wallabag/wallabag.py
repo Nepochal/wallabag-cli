@@ -116,19 +116,31 @@ if command == "list":
         help(argv[0], command)
         exit(0)
 
+    filter_starred = None
+    filter_read = False
+
     optionlist = argv[2:len(argv)]
     url = argv[len(argv) - 1]
-    title = None
-    star = False
-    read = False
 
     try:
-        args = getopt.getopt(optionlist, "h", [
-            "help"])[0]
+        args = getopt.getopt(optionlist, "hsura", [
+            "help", "starred", "unstarred", "read", "unread", "all"])[0]
     except getopt.GetoptError as e:
         print("Error: Invalid option \"{0}\"".format(e.opt))
         print()
         exit(-1)
+
     for opt, arg in args:
-        pass
-    wallabag_list.list_entries()
+        if opt in ('-s', '--starred'):
+            filter_starred = True
+    for opt, arg in args:
+        if opt in ('-u', '--unstarred'):
+            filter_starred = False
+    for opt, arg in args:
+        if opt in ('-r', '--read'):
+            filter_read = True
+    for opt, arg in args:
+        if opt in ('-a', '--all'):
+            filter_read = None
+
+    wallabag_list.list_entries(filter_read, filter_starred)
