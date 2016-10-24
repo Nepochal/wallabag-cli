@@ -22,6 +22,5 @@ class Entry:
 def entrylist(items):
     ret = list()
     for item in items:
-        print(item)
         ret.append(Entry(item))
     return ret

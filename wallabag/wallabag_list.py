@@ -24,8 +24,19 @@ def list_entries():
         exit(-1)
 
     entries = entry.entrylist(response['_embedded']["items"])
-    for item in entries:
-        print(item.title)
+    print_entries(entries)
 
+
+def print_entries(entries):
+
+    if len(entries) > 0:
+        size_entry_id = len(str(entries[0].entry_id))
+
+    for item in entries:
+        entry_id = str(item.entry_id).rjust(size_entry_id)
+        title = item.title
+
+        line = "{0} {1}".format(entry_id, title)
+        print(line)
 
 list_entries()
