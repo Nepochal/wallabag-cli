@@ -30,7 +30,7 @@ def list_entries():
 
 def print_entries(entries):
 
-    title_maxlength = os.get_terminal_size().columns
+    maxlength = os.get_terminal_size().columns
     size_entry_id = 0
     show_read_column = False
     show_starred_column = False
@@ -65,6 +65,5 @@ def print_entries(entries):
             if show_starred_column:
                 line = line + starred
 
-        title = title[0:title_maxlength - len(line) - 1]
         line = line + " {0}".format(title)
-        print(line)
+        print(line[0:maxlength])
