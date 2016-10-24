@@ -9,28 +9,29 @@ This document describes the compilation of the whole project into one single fil
    `pip install -r requirements.txt`
 3. Install pyinstaller  
    `pip install pyinstaller`
-4. From within the main folder build the project.
+4. Switch to the wallabag subfolder
+5. From within the main folder build the project.
 
    On Linux or Cygwin:
    ```
    pyinstaller -F \
-     wallabag/wallabag.py \
-     wallabag/api.py \
-     wallabag/conf.py \
-     wallabag/wallabag_add.py \
-     wallabag/wallabag_config.py \
-     wallabag/wallabag_help.py
+     wallabag.py \
+     api.py \
+     conf.py \
+     wallabag_add.py \
+     wallabag_config.py \
+     wallabag_help.py
    ```
 
    On Windows:
    ```
    pyinstaller -F ^
-     wallabag/wallabag.py ^
-     wallabag/api.py ^
-     wallabag/conf.py ^
-     wallabag/wallabag_add.py ^
-     wallabag/wallabag_config.py ^
-     wallabag/wallabag_help.py   
+     wallabag.py ^
+     api.py ^
+     conf.py ^
+     wallabag_add.py ^
+     wallabag_config.py ^
+     wallabag_help.py   
    ```
 
 The executable will be in the dist-folder.
