@@ -3,8 +3,9 @@
 import getopt
 from sys import argv
 from wallabag_help import show as help
-import wallabag_config
 import wallabag_add
+import wallabag_config
+import wallabag_list
 import conf
 from sys import exit
 
@@ -26,7 +27,7 @@ elif argv[1] in {'--about'}:
     print()
     print("This software is licensed under the GPLv3.")
     exit(0)
-elif argv[1] in ["config", "add"]:
+elif argv[1] in ["config", "add", "list"]:
     command = argv[1]
     need_config = command != "config"
 elif argv[1][0] != '-':
@@ -109,3 +110,25 @@ if command == "add":
         if opt in ('-r', '--read'):
             read = True
     wallabag_add.add(url, title, star, read)
+
+if command == "list":
+    if "-h" in argv[2:len(argv)] or "--help" in argv[2:len(argv)]:
+        help(argv[0], command)
+        exit(0)
+
+    optionlist = argv[2:len(argv)]
+    url = argv[len(argv) - 1]
+    title = None
+    star = False
+    read = False
+
+    try:
+        args = getopt.getopt(optionlist, "h", [
+            "help"])[0]
+    except getopt.GetoptError as e:
+        print("Error: Invalid option \"{0}\"".format(e.opt))
+        print()
+        exit(-1)
+    for opt, arg in args:
+        pass
+    wallabag_list.list_entries()

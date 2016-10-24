@@ -68,5 +68,3 @@ def print_entries(entries):
         title = title[0:title_maxlength - len(line) - 1]
         line = line + " {0}".format(title)
         print(line)
-
-list_entries()
