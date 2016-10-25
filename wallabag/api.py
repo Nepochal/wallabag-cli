@@ -210,8 +210,7 @@ def api_entry_exists(url):
     return response
 
 
-def api_list_entries
-(count, filter_read=None, filter_starred=None):
+def api_list_entries(count, filter_read=None, filter_starred=None):
     url = __get_api_url(ApiMethod.list_entries)
     header = __get_authorization_header()
     params = dict()
