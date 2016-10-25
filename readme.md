@@ -21,7 +21,7 @@ Wallabag-cli is in a very early stage of development and not suitable for produc
   `wallabag.py --help`
 - Run wallabag.py
 
-For a description on how to compile the whole project into a single binary look into the [build documentation](https://github.com/Nepochal/wallabag-cli/blob/master/docs/build.md).
+For a description on how to compile the whole project into a single binary look into the [build documentation](docs/build.md).
 
 
 ------
