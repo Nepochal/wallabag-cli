@@ -13,7 +13,7 @@ def list_entries(filter_read=False, filter_starred=None):
     conf.load()
 
     try:
-        request = api.api_list_entries(filter_read, filter_starred)
+        request = api.api_list_entries(30, filter_read, filter_starred)
         if(request.hasError()):
             print("Error: {0} - {1}".format(request.error_text,
                                             request.error_description))
