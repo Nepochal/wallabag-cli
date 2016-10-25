@@ -9,11 +9,14 @@ import os
 from sys import exit
 
 
-def list_entries(filter_read=False, filter_starred=None):
+def list_entries(count=None, filter_read=False, filter_starred=None):
     conf.load()
 
+    if count == None:
+        count = os.get_terminal_size().lines - 2
+
     try:
-        request = api.api_list_entries(30, filter_read, filter_starred)
+        request = api.api_list_entries(count, filter_read, filter_starred)
         if(request.hasError()):
             print("Error: {0} - {1}".format(request.error_text,
                                             request.error_description))
