@@ -1,18 +1,27 @@
 #!/usr/bin/env python3
 
+import conf
 import getopt
+import platform
+import subprocess
 from sys import argv
+from sys import exit
 from wallabag_help import show as help
 import wallabag_add
 import wallabag_config
 import wallabag_list
-import conf
-from sys import exit
 
 PROGRAM_VERSION = "0.2.0-alpha"
 
 command = None
 need_config = False
+
+# Workaround for default non-unicode encodings in the Windows cmd and Powershell
+# -> Analyze encoding and set to utf-8
+if(platform.system() == "Windows"):
+    codepage = subprocess.check_output(['chcp'], shell=True).decode()
+    if "65001" not in codepage:
+        subprocess.check_output(['chcp', '65001'], shell=True)
 
 # Determine command or general standalone option
 if len(argv) == 1 or argv[1] in {'-h', '--help'}:
