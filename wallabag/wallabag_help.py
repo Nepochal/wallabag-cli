@@ -77,6 +77,7 @@ Options:
   -a, --all                   Show read as well as unread entries
   -s, --starred               Show only starred entries
   -u, --unstarred             Show only unstarred entries
+  -o, --oldest                Show oldest matches instead of the newest
 """.format(startscript)
     index['list'] = list_txt
 
