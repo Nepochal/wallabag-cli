@@ -9,14 +9,15 @@ import os
 from sys import exit
 
 
-def list_entries(count=None, filter_read=False, filter_starred=None):
+def list_entries(count=None, filter_read=False, filter_starred=None, oldest=False):
     conf.load()
 
     if count == None:
         count = os.get_terminal_size().lines - 2
 
     try:
-        request = api.api_list_entries(count, filter_read, filter_starred)
+        request = api.api_list_entries(
+            count, filter_read, filter_starred, oldest)
         if(request.hasError()):
             print("Error: {0} - {1}".format(request.error_text,
                                             request.error_description))
@@ -28,18 +29,20 @@ def list_entries(count=None, filter_read=False, filter_starred=None):
         exit(-1)
 
     entries = entry.entrylist(response['_embedded']["items"])
-    print_entries(entries)
+    print_entries(entries, (not oldest))
 
 
-def print_entries(entries):
+def print_entries(entries, reverse_order=False):
 
     maxlength = os.get_terminal_size().columns
     size_entry_id = 0
     show_read_column = False
     show_starred_column = False
-
     if len(entries) > 0:
         size_entry_id = len(str(entries[0].entry_id))
+        entry_id_last = len(str(entries[len(entries) - 1].entry_id))
+        if entry_id_last > size_entry_id:
+            size_entry_id = entry_id_last
 
     for item in entries:
         if(item.read):
@@ -47,7 +50,9 @@ def print_entries(entries):
         if(item.starred):
             show_starred_column = True
 
-    for item in reversed(entries):
+    if reverse_order:
+        entries = reversed(entries)
+    for item in entries:
         entry_id = str(item.entry_id).rjust(size_entry_id)
 
         read = " "
