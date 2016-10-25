@@ -39,3 +39,4 @@ This document describes the compilation of the whole project into one single fil
    ```
 
 The executable will be in the dist-folder.
+It needs a working python 3 installation. The pip-modules listed in requirements.txt are not necessary.
