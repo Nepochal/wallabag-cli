@@ -47,7 +47,7 @@ def print_entries(entries):
         if(item.starred):
             show_starred_column = True
 
-    for item in entries:
+    for item in reversed(entries):
         entry_id = str(item.entry_id).rjust(size_entry_id)
 
         read = " "
