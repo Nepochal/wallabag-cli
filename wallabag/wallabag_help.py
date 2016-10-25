@@ -70,12 +70,13 @@ Description:
   Gives a summary of entries in wallabag. Use options to filter the results.
 
 Options:
-  -h, --help       Show help
-  --unread         Show only unread entries (default)
-  -r, --read       Show only read entries
-  -a, --all        Show read as well as unread entries
-  -s, --starred    Show only starred entries
-  -u, --unstarred  Show only unstarred entries
+  -h, --help                  Show help
+  -c, --count <"all"|number>  Set the number of entries to show
+  --unread                    Show only unread entries (default)
+  -r, --read                  Show only read entries
+  -a, --all                   Show read as well as unread entries
+  -s, --starred               Show only starred entries
+  -u, --unstarred             Show only unstarred entries
 """.format(startscript)
     index['list'] = list_txt
 
