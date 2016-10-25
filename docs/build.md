@@ -18,9 +18,11 @@ This document describes the compilation of the whole project into one single fil
      wallabag.py \
      api.py \
      conf.py \
+     entry.py \
      wallabag_add.py \
      wallabag_config.py \
-     wallabag_help.py
+     wallabag_help.py \
+     wallabag_list.py
    ```
 
    On Windows:
@@ -29,9 +31,11 @@ This document describes the compilation of the whole project into one single fil
      wallabag.py ^
      api.py ^
      conf.py ^
+     entry.py ^
      wallabag_add.py ^
      wallabag_config.py ^
-     wallabag_help.py   
+     wallabag_help.py ^
+     wallabag_list.py   
    ```
 
 The executable will be in the dist-folder.
