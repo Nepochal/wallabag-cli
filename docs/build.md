@@ -1,42 +1,39 @@
-**Notice**
-
-This document describes the compilation of the whole project into one single file. If you only want to execute the program use the description in the [readme](https://github.com/Nepochal/wallabag-cli/blob/master/readme.md).
-
----
+# Compile a binary
 
 1. Install python 3.4.2 or above
-2. Install missing dependencies via pip  
-   `pip install -r requirements.txt`
-3. Install pyinstaller  
-   `pip install pyinstaller`
+2. Install missing dependencies via pip<br>
+  `pip install -r requirements.txt`
+3. Install pyinstaller<br>
+  `pip install pyinstaller`
 4. Switch to the wallabag subfolder
-5. From within the main folder build the project.
+5. Build the project
 
-   On Linux or Cygwin:
-   ```
-   pyinstaller -F \
-     wallabag.py \
-     api.py \
-     conf.py \
-     entry.py \
-     wallabag_add.py \
-     wallabag_config.py \
-     wallabag_help.py \
-     wallabag_list.py
-   ```
+  On Linux or Cygwin:
 
-   On Windows:
-   ```
-   pyinstaller -F ^
-     wallabag.py ^
-     api.py ^
-     conf.py ^
-     entry.py ^
-     wallabag_add.py ^
-     wallabag_config.py ^
-     wallabag_help.py ^
-     wallabag_list.py   
-   ```
+  ```
+  pyinstaller -F \
+    wallabag.py \
+    api.py \
+    conf.py \
+    entry.py \
+    wallabag_add.py \
+    wallabag_config.py \
+    wallabag_help.py \
+    wallabag_list.py
+  ```
 
-The executable will be in the dist-folder.
-It needs a working python 3 installation. The pip-modules listed in requirements.txt are not necessary.
+  On Windows:
+
+  ```
+  pyinstaller -F ^
+    wallabag.py ^
+    api.py ^
+    conf.py ^
+    entry.py ^
+    wallabag_add.py ^
+    wallabag_config.py ^
+    wallabag_help.py ^
+    wallabag_list.py
+  ```
+
+The executable will be in the dist-folder. It needs a working python 3 installation. The pip-modules listed in requirements.txt are not necessary.
