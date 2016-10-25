@@ -1,17 +1,27 @@
 #!/usr/bin/env python3
 
-import getopt
-from sys import argv
-from wallabag_help import show as help
-import wallabag_config
-import wallabag_add
 import conf
+import getopt
+import platform
+import subprocess
+from sys import argv
 from sys import exit
+from wallabag_help import show as help
+import wallabag_add
+import wallabag_config
+import wallabag_list
 
 PROGRAM_VERSION = "0.2.0-alpha"
 
 command = None
 need_config = False
+
+# Workaround for default non-unicode encodings in the Windows cmd and Powershell
+# -> Analyze encoding and set to utf-8
+if(platform.system() == "Windows"):
+    codepage = subprocess.check_output(['chcp'], shell=True).decode()
+    if "65001" not in codepage:
+        subprocess.check_output(['chcp', '65001'], shell=True)
 
 # Determine command or general standalone option
 if len(argv) == 1 or argv[1] in {'-h', '--help'}:
@@ -26,7 +36,7 @@ elif argv[1] in {'--about'}:
     print()
     print("This software is licensed under the GPLv3.")
     exit(0)
-elif argv[1] in ["config", "add"]:
+elif argv[1] in ["config", "add", "list"]:
     command = argv[1]
     need_config = command != "config"
 elif argv[1][0] != '-':
@@ -109,3 +119,50 @@ if command == "add":
         if opt in ('-r', '--read'):
             read = True
     wallabag_add.add(url, title, star, read)
+
+if command == "list":
+    if "-h" in argv[2:len(argv)] or "--help" in argv[2:len(argv)]:
+        help(argv[0], command)
+        exit(0)
+
+    filter_starred = None
+    filter_read = False
+    count = None
+    oldest = False
+
+    optionlist = argv[2:len(argv)]
+    url = argv[len(argv) - 1]
+
+    try:
+        args = getopt.getopt(optionlist, "hsurac:o", [
+            "help", "starred", "unstarred", "read", "unread", "all", "count=", "oldest"])[0]
+    except getopt.GetoptError as e:
+        print("Error: Invalid option \"{0}\"".format(e.opt))
+        print()
+        exit(-1)
+
+    for opt, arg in args:
+        if opt in ('-s', '--starred'):
+            filter_starred = True
+        if opt in ('-u', '--unstarred'):
+            filter_starred = False
+        if opt in ('-r', '--read'):
+            filter_read = True
+        if opt in ('-a', '--all'):
+            filter_read = None
+        if opt in ('-a', '--all'):
+            filter_read = None
+        if opt in ('-c', '--count'):
+            if arg == "all":
+                arg = 65535
+            try:
+                arg = int(arg)
+            except ValueError:
+                print(
+                    "Error: the argument for {0} has to be \"all\" or a number.".format(opt))
+                exit(-1)
+            count = arg
+        if opt in ('-o', '--oldest'):
+            oldest = True
+
+    wallabag_list.list_entries(count, filter_read, filter_starred, oldest)
