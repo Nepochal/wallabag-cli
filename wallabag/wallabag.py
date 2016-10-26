@@ -11,7 +11,7 @@ import wallabag_add
 import wallabag_config
 import wallabag_list
 
-PROGRAM_VERSION = "0.2.0-alpha"
+PROGRAM_VERSION = "0.3.0-alpha"
 
 command = None
 need_config = False
