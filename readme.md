@@ -4,12 +4,6 @@ Wallabag-cli is a command line client for the self hosted read-it-later app wall
 
 --------------------------------------------------------------------------------
 
-## Warning
-
-Wallabag-cli is in a very early stage of development and not suitable for productive use!
-
---------------------------------------------------------------------------------
-
 ## Documentation
 
 Please have a look at the [documentation overview](docs/index.md) to begin using wallabag-cli.
@@ -18,8 +12,8 @@ Please have a look at the [documentation overview](docs/index.md) to begin using
 
 **Already implemented features**
 
+- List entries (filterable)
 - Add new entries
-- List entries (read, unread, starred, all)
 
 **Missing features**
 

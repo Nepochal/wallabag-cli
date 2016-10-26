@@ -2,7 +2,7 @@
 
 - [Requirements](requirements.md)
 - [Installation](installation.md)
-- Quick start guide
+- [Quick start guide](quickstart.md)
 
 --------------------------------------------------------------------------------
 
