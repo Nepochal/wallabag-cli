@@ -1,7 +1,7 @@
 **For users**
 
 - [Requirements](requirements.md)
-- Installation
+- [Installation](installation.md)
 - Quick start guide
 
 --------------------------------------------------------------------------------
