@@ -1,10 +1,8 @@
 **For users**
 
-- Requirements
+- [Requirements](requirements.md)
 - Installation
-- Configuration
-- Add new entries to wallabag
-- List existing entries
+- Quick start guide
 
 --------------------------------------------------------------------------------
 

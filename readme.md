@@ -12,7 +12,7 @@ Wallabag-cli is in a very early stage of development and not suitable for produc
 
 ## Documentation
 
-Please have a look at the [getting started overview](docs/getting_started.md) to begin using wallabag-cli.
+Please have a look at the [documentation overview](docs/overview.md) to begin using wallabag-cli.
 
 --------------------------------------------------------------------------------
 
