@@ -25,7 +25,7 @@ sudo mv wallabag /usr/bin
 ## Sources
 
 - Download the sources via git or from our [release-page](https://github.com/Nepochal/wallabag-cli/releases)
-- Propably unzip them
+- Probably unzip them
 - Install all missing python modules by executing<br>
   `pip install -r requirements.txt`<br>
   in the main folder
