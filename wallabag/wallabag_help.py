@@ -17,6 +17,7 @@ Usage:
 Commands:
   config         Start the configuration.
   add            Add a new entry to wallabag.
+  delete         Delete an entry.
   list           List the entries on the wallabag account.
 
 General Options:
@@ -60,6 +61,20 @@ Options:
   -r, --read           Mark as read
 """.format(startscript)
     index['add'] = add_txt
+
+    # delete
+    delete_txt = """
+Usage:
+  {0} delete [options] <entry-id>
+
+Description:
+  Delete an entry from wallabag. The entry-id can be found in "{0} list" for example.
+
+Options:
+  -h, --help   Show help
+  -f, --force  Do not ask before deletion
+""".format(startscript)
+    index['delete'] = delete_txt
 
     # list
     list_txt = """
