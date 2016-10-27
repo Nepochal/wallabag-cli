@@ -49,7 +49,7 @@ def add(target_url, title=None, star=False, read=False):
                                             request.error_description))
             exit(-1)
         else:
-            print("Entry successfully added")
+            print("Entry successfully added.")
             exit(0)
     except api.OAuthException as e:
         print("Error: {0}".format(e.text))
