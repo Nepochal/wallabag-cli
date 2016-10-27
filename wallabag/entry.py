@@ -11,6 +11,7 @@ class Entry:
 
         title = item['title']
         title = title.replace("\n", "")
+        title = " ".join(title.split())
         self.title = title
 
         self.content = item['content']
