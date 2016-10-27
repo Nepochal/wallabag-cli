@@ -29,6 +29,7 @@ def delete(entry_id, force=False):
         request = api.api_delete_entry(entry_id)
         __handle_request_error(request)
         print("Entry successfully deleted.")
+        print()
         exit(0)
     except api.OAuthException as e:
         print("Error: {0}".format(e.text))
@@ -40,6 +41,7 @@ def __handle_request_error(request):
     if(request.hasError()):
         if request.error == api.Error.http_forbidden or request.error == api.Error.http_not_found:
             print("Error: Invalid entry id.")
+            print()
             exit(-1)
         print("Error: {0} - {1}".format(request.error_text,
                                         request.error_description))
