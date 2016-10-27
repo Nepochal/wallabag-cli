@@ -31,6 +31,7 @@ class Error(Enum):
 
 class ApiMethod(Enum):
     add_entry = "/api/entries"
+    delete_entry = "/api/entries/{0}"
     entry_exists = "/api/entries/exists"
     list_entries = "/api/entries"
     token = "/oauth/v2/token"
@@ -108,6 +109,19 @@ def __get_authorization_header():
         raise e
     else:
         return {'Authorization': "Bearer {0}".format(token_or_error)}
+
+
+def __request_delete(url, headers=None):
+    ret = None
+    request = None
+
+    try:
+        request = requests.delete(url, headers=headers)
+        ret = Response(request.status_code, request.text)
+    # dns error
+    except (requests.exceptions.ConnectionError, requests.exceptions.MissingSchema):
+        ret = Response(0, None)
+    return ret
 
 
 def __request_get(url, headers=None, params=None):
@@ -199,6 +213,11 @@ def api_add_entry(targeturl, title=None, star=False, read=False):
         data['archive'] = 1
     response = __request_post(url, header, data)
     return response
+
+
+def api_delete_entry(entry_id, force=False):
+    url = __get_api_url(ApiMethod.delete_entry).format(entry_id)
+    header = __get_authorization_header()
 
 
 def api_entry_exists(url):
