@@ -215,9 +215,12 @@ def api_add_entry(targeturl, title=None, star=False, read=False):
     return response
 
 
-def api_delete_entry(entry_id, force=False):
+def api_delete_entry(entry_id):
     url = __get_api_url(ApiMethod.delete_entry).format(entry_id)
     header = __get_authorization_header()
+
+    response = __request_delete(url, header)
+    return response
 
 
 def api_entry_exists(url):
