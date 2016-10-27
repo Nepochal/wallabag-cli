@@ -32,6 +32,7 @@ class Error(Enum):
 class ApiMethod(Enum):
     add_entry = "/api/entries"
     delete_entry = "/api/entries/{0}"
+    show_entry = "/api/entries/{0}"
     entry_exists = "/api/entries/exists"
     list_entries = "/api/entries"
     token = "/oauth/v2/token"
@@ -229,6 +230,14 @@ def api_entry_exists(url):
     data = dict()
     data['url'] = url
     response = __request_get(apiurl, headers=header, params=data)
+    return response
+
+
+def api_show_entry(entry_id):
+    url = __get_api_url(ApiMethod.show_entry).format(entry_id)
+    header = __get_authorization_header()
+
+    response = __request_get(url, header)
     return response
 
 
