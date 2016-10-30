@@ -19,6 +19,7 @@ Commands:
   add            Add a new entry to wallabag.
   delete         Delete an entry.
   list           List the entries on the wallabag account.
+  update         Change the read- or starred-status of an existing entry or change the title.
 
 General Options:
   -h, --help     Show help.
@@ -95,6 +96,22 @@ Options:
   -o, --oldest                Show oldest matches instead of the newest
 """.format(startscript)
     index['list'] = list_txt
+
+    # update
+    update_txt = """
+Usage:
+  {0} update [options] <entry-id>
+
+Description:
+  Toggle the read- or starred status or change the title of an existing entry. The entry-id can be found in "{0} list" for example.
+
+Options:
+  -h, --help             Show help
+  -r, --read             Toggle the read-status
+  -s, --starred          Toggle the starred-status
+  -t, --title <"title">  Change the title
+""".format(startscript)
+    index['update'] = update_txt
 
     if not command in index:
         print("Error: Invalid command \"{0}\"!".format(command))
