@@ -3,9 +3,9 @@ Wallabag API accesses.
 """
 from enum import Enum
 import json
+import time
 import re
 import requests
-import time
 import conf
 from conf import Configs
 
@@ -15,10 +15,16 @@ MINIMUM_API_VERSION_HR = "2.1.1"
 
 
 class OAuthException(Exception):
+    """
+    An exception that occurs when the request of an oauth2-token fails.
+    """
     pass
 
 
 class Error(Enum):
+    """
+    A list of possible http errors.
+    """
     undefined = -1
     ok = 0
     dns_error = 1
@@ -30,6 +36,10 @@ class Error(Enum):
 
 
 class ApiMethod(Enum):
+    """
+    The list of valid wallabag-api urls.
+    The server url has to be put in front of it.
+    """
     add_entry = "/api/entries"
     delete_entry = "/api/entries/{0}"
     get_entry = "/api/entries/{0}"
@@ -41,6 +51,9 @@ class ApiMethod(Enum):
 
 
 class Response:
+    """
+    A response given by an api-call.
+    """
     http_code = 0
     error = Error.undefined
     error_text = ""
@@ -89,9 +102,15 @@ class Response:
             self.error_text = "An unknown error occured."
 
     def is_rersponse_status_ok(self):
+        """
+        Return True if the http status code is ok.
+        """
         return self.http_code == 200
 
-    def hasError(self):
+    def has_error(self):
+        """
+        Returns True if the response has an error.
+        """
         return self.error != Error.ok
 
 
@@ -106,9 +125,9 @@ def __get_api_url(api_method, different_url=None):
 def __get_authorization_header():
     success, token_or_error = get_token()
     if not success:
-        e = OAuthException
-        e.text = token_or_error
-        raise e
+        error = OAuthException
+        error.text = token_or_error
+        raise error
     else:
         return {'Authorization': "Bearer {0}".format(token_or_error)}
 
@@ -166,11 +185,17 @@ def __request_patch(url, headers=None, data=None):
 
 
 def is_valid_url(url):
+    """
+    Sends a request to the given url and checks if it returns a valid http page.
+    """
     response = __request_get(url)
-    return not response.hasError()
+    return not response.has_error()
 
 
 def is_minimum_version(version_response):
+    """
+    Returns True if the wallabag-instance meets the required minimum version.
+    """
     versionstring = version_response.response
 
     if not re.compile('"\\d+\\.\\d+\\.\\d+"').match(versionstring):
@@ -178,31 +203,37 @@ def is_minimum_version(version_response):
 
     ver = versionstring.strip('"').split('.')
 
-    x = int(ver[0])
-    y = int(ver[1])
-    z = int(ver[2])
-    tx, ty, tz = MINIMUM_API_VERSION
+    major = int(ver[0])
+    minor = int(ver[1])
+    patch = int(ver[2])
+    tmajor, tminor, tpatch = MINIMUM_API_VERSION
 
-    if x > tx:
+    if major > tmajor:
         return True
-    elif x < tx:
+    elif major < tmajor:
         return False
     else:
-        if y > ty:
+        if minor > tminor:
             return True
-        elif y < ty:
+        elif minor < tminor:
             return False
         else:
-            return z >= tz
+            return patch >= tpatch
 
 
 def api_version(different_url=None):
+    """
+    Returns the api version of the server saved in the config file.
+    """
     url = __get_api_url(ApiMethod.version, different_url)
     response = __request_get(url)
     return response
 
 
 def api_token():
+    """
+    Creates and returns a valid api-token
+    """
     url = __get_api_url(ApiMethod.token)
     data = dict()
     data['grant_type'] = "password"
@@ -216,6 +247,9 @@ def api_token():
 
 
 def api_add_entry(targeturl, title=None, star=False, read=False):
+    """
+    Adds a new entry to the wallabag-account.
+    """
     url = __get_api_url(ApiMethod.add_entry)
     header = __get_authorization_header()
     data = dict()
@@ -231,6 +265,9 @@ def api_add_entry(targeturl, title=None, star=False, read=False):
 
 
 def api_delete_entry(entry_id):
+    """
+    Deletes an existing entry from the wallabag-account.
+    """
     url = __get_api_url(ApiMethod.delete_entry).format(entry_id)
     header = __get_authorization_header()
 
@@ -239,6 +276,9 @@ def api_delete_entry(entry_id):
 
 
 def api_entry_exists(url):
+    """
+    Checks if an entry already exists.
+    """
     apiurl = __get_api_url(ApiMethod.entry_exists)
     header = __get_authorization_header()
     data = dict()
@@ -248,6 +288,9 @@ def api_entry_exists(url):
 
 
 def api_get_entry(entry_id):
+    """
+    Gets an existing entry from the wallabag-account.
+    """
     url = __get_api_url(ApiMethod.get_entry).format(entry_id)
     header = __get_authorization_header()
 
@@ -256,6 +299,9 @@ def api_get_entry(entry_id):
 
 
 def api_update_entry(entry_id, new_title=None, star=None, read=None):
+    """
+    Updates an existing entry.
+    """
     url = __get_api_url(ApiMethod.update_entry).format(entry_id)
     header = __get_authorization_header()
     data = dict()
@@ -276,6 +322,9 @@ def api_update_entry(entry_id, new_title=None, star=None, read=None):
 
 
 def api_list_entries(count, filter_read=None, filter_starred=None, oldest=False):
+    """
+    Gets a filtered list of existing entries.
+    """
     url = __get_api_url(ApiMethod.list_entries)
     header = __get_authorization_header()
     params = dict()
@@ -319,7 +368,7 @@ def get_token(force_creation=False):
     """
     if conf.is_token_expired() or force_creation:
         response = api_token()
-        if not response.hasError():
+        if not response.has_error():
             content = json.loads(response.response)
             Configs.access_token = content['access_token']
             Configs.expires = time.time() + content['expires_in']
