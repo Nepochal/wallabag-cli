@@ -18,8 +18,10 @@
     entry.py \
     wallabag_add.py \
     wallabag_config.py \
+    wallabag_delete.py \
     wallabag_help.py \
-    wallabag_list.py
+    wallabag_list.py \
+    wallabag_update.py
   ```
 
   On Windows:
@@ -32,8 +34,10 @@
     entry.py ^
     wallabag_add.py ^
     wallabag_config.py ^
+    wallabag_delete.py ^
     wallabag_help.py ^
-    wallabag_list.py
+    wallabag_list.py ^
+    wallabag_update.py
   ```
 
 The executable will be in the dist-folder. It needs a working python 3 installation. The pip-modules listed in requirements.txt are not necessary.
