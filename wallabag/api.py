@@ -259,7 +259,6 @@ def api_update_entry(entry_id, new_title=None, star=None, read=None):
     url = __get_api_url(ApiMethod.update_entry).format(entry_id)
     header = __get_authorization_header()
     data = dict()
-    data['starred'] = 1
     if new_title != None:
         data['title'] = new_title
     if star != None:
