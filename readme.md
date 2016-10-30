@@ -14,11 +14,12 @@ Please have a look at the [documentation overview](docs/index.md) to begin using
 
 - List entries (filterable)
 - Add new entries
-
-**Missing features**
-
 - Delete entries
 - Mark existing entries as read
 - Mark existing entries as starred
+- Change the title of existing entries
+
+**Missing features**
+
 - Show entry
 - Curses interface for interactive use
