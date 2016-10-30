@@ -33,6 +33,7 @@ class ApiMethod(Enum):
     add_entry = "/api/entries"
     delete_entry = "/api/entries/{0}"
     get_entry = "/api/entries/{0}"
+    update_entry = "/api/entries/{0}"
     entry_exists = "/api/entries/exists"
     list_entries = "/api/entries"
     token = "/oauth/v2/token"
@@ -144,6 +145,19 @@ def __request_post(url, headers=None, data=None):
 
     try:
         request = requests.post(url, data=data, headers=headers)
+        ret = Response(request.status_code, request.text)
+    # dns error
+    except (requests.exceptions.ConnectionError, requests.exceptions.MissingSchema):
+        ret = Response(0, None)
+    return ret
+
+
+def __request_patch(url, headers=None, data=None):
+    ret = None
+    request = None
+
+    try:
+        request = requests.patch(url, data=data, headers=headers)
         ret = Response(request.status_code, request.text)
     # dns error
     except (requests.exceptions.ConnectionError, requests.exceptions.MissingSchema):
