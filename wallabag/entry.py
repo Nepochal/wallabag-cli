@@ -1,4 +1,12 @@
+"""
+Wallabag entry.
+"""
+
+
 class Entry:
+    """
+    The entry class.
+    """
     entry_id = 0
     title = ""
     content = ""
@@ -21,6 +29,9 @@ class Entry:
 
 
 def entrylist(items):
+    """
+    Creates Entry instances of multiple items and returns an Entry-list.
+    """
     ret = list()
     for item in items:
         ret.append(Entry(item))

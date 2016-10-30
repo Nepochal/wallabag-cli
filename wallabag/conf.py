@@ -91,15 +91,22 @@ def __dicionary2config(configdict):
 
 
 def is_valid(path=CONFIG_FILENAME):
+    """
+    Returns True if a config file is suitable.
+    """
     if not exist(path):
         return False
     load(path)
-    if "" in [Configs.serverurl, Configs.username, Configs.password, Configs.client, Configs.secret]:
+    if "" in [Configs.serverurl, Configs.username, Configs.password,
+              Configs.client, Configs.secret]:
         return False
     return True
 
 
 def exist(path=CONFIG_FILENAME):
+    """
+    Returns True if a config file exists.
+    """
     file = Path(path)
     return file.is_file()
 
@@ -159,6 +166,9 @@ def load(path=CONFIG_FILENAME):
 
 
 def load_or_create(path=CONFIG_FILENAME):
+    """
+    Loads aconfig file or creates a blank one.
+    """
     success = False
     if not exist(path):
         success = save(path)
