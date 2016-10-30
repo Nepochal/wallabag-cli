@@ -255,6 +255,27 @@ def api_get_entry(entry_id):
     return response
 
 
+def api_update_entry(entry_id, new_title=None, star=None, read=None):
+    url = __get_api_url(ApiMethod.update_entry).format(entry_id)
+    header = __get_authorization_header()
+    data = dict()
+    data['starred'] = 1
+    if new_title != None:
+        data['title'] = new_title
+    if star != None:
+        if not star:
+            data['starred'] = 0
+        else:
+            data["starred"] = 1
+    if read != None:
+        if not read:
+            data['archive'] = 0
+        else:
+            data['archive'] = 1
+    response = __request_patch(url, header, data)
+    return response
+
+
 def api_list_entries(count, filter_read=None, filter_starred=None, oldest=False):
     url = __get_api_url(ApiMethod.list_entries)
     header = __get_authorization_header()
