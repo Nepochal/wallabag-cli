@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-
-import conf
+"""
+The main entry point of wallabag-cli.
+"""
 import getopt
 import platform
 import subprocess
 from sys import argv
 from sys import exit
+import conf
 from wallabag_help import show as help
 import wallabag_add
 import wallabag_config
@@ -20,7 +22,7 @@ need_config = False
 
 # Workaround for default non-unicode encodings in the Windows cmd and Powershell
 # -> Analyze encoding and set to utf-8
-if(platform.system() == "Windows"):
+if platform.system() == "Windows":
     codepage = subprocess.check_output(['chcp'], shell=True).decode()
     if "65001" not in codepage:
         subprocess.check_output(['chcp', '65001'], shell=True)
@@ -65,9 +67,9 @@ if command == "config":
 
     try:
         args = getopt.getopt(optionlist, "hcpo", [
-                             "help", "check", "password", "oauth"])[0]
-    except getopt.GetoptError as e:
-        print("Error: Invalid option \"{0}\"".format(e.opt))
+            "help", "check", "password", "oauth"])[0]
+    except getopt.GetoptError as ex:
+        print("Error: Invalid option \"{0}\"".format(ex.opt))
         print()
         exit(-1)
     for opt, arg in args:
@@ -109,8 +111,8 @@ if command == "add":
     try:
         args = getopt.getopt(optionlist, "ht:sr", [
             "help", "title=", "starred", "read"])[0]
-    except getopt.GetoptError as e:
-        print("Error: Invalid option \"{0}\"".format(e.opt))
+    except getopt.GetoptError as ex:
+        print("Error: Invalid option \"{0}\"".format(ex.opt))
         print()
         exit(-1)
     for opt, arg in args:
@@ -142,8 +144,8 @@ if command == "update":
     try:
         args = getopt.getopt(optionlist, "ht:sr", [
             "help", "title=", "starred", "read"])[0]
-    except getopt.GetoptError as e:
-        print("Error: Invalid option \"{0}\"".format(e.opt))
+    except getopt.GetoptError as ex:
+        print("Error: Invalid option \"{0}\"".format(ex.opt))
         print()
         exit(-1)
     for opt, arg in args:
@@ -204,8 +206,8 @@ if command == "list":
     try:
         args = getopt.getopt(optionlist, "hsurac:o", [
             "help", "starred", "unstarred", "read", "unread", "all", "count=", "oldest"])[0]
-    except getopt.GetoptError as e:
-        print("Error: Invalid option \"{0}\"".format(e.opt))
+    except getopt.GetoptError as ex:
+        print("Error: Invalid option \"{0}\"".format(ex.opt))
         print()
         exit(-1)
 
