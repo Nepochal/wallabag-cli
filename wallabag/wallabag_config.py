@@ -2,12 +2,15 @@
 Interactive configuration tool for wallabag-cli.
 """
 import re
+from sys import exit
 import api
 import conf
-from sys import exit
 
 
 def start(ask_serverurl=True, ask_username=True, ask_password=True, ask_oauth2=True):
+    """
+    Interactive configuration.
+    """
     conf.load_or_create()
 
     serverurl = conf.get_config('serverurl')
@@ -39,7 +42,7 @@ def start(ask_serverurl=True, ask_username=True, ask_password=True, ask_oauth2=T
 
     # username/password and client/secret check
     testresponse = api.api_token()
-    if testresponse.hasError():
+    if testresponse.has_error():
         conf.save()
         if testresponse.error == api.Error.http_bad_request:
             print(testresponse.error_description)
@@ -50,6 +53,7 @@ def start(ask_serverurl=True, ask_username=True, ask_password=True, ask_oauth2=T
                 start(ask_serverurl=False, ask_username=False, ask_password=False)
                 return
         print("An unknown error occured on the server side. Please try again later.")
+        print()
         exit(-1)
 
     print()
@@ -57,10 +61,14 @@ def start(ask_serverurl=True, ask_username=True, ask_password=True, ask_oauth2=T
         print("The config was saved successfully.")
     else:
         print("An error occured while saving the configuration. Please try again.")
+        print()
         exit(-1)
 
 
 def check():
+    """
+    Checks if the config is suitable.
+    """
     if not conf.is_valid():
         print("The config is missing or incomplete.")
         return False
@@ -68,7 +76,7 @@ def check():
     conf.load()
 
     response = api.api_version()
-    if response.hasError():
+    if response.has_error():
         print("The server or the API is not reachable.")
         return False
 
@@ -77,7 +85,7 @@ def check():
         return False
 
     response = api.api_token()
-    if response.hasError():
+    if response.has_error():
         print(response.error_description)
         return False
 
@@ -112,7 +120,7 @@ def __serverurl(forced):
 
     # dns and http status check
     testresponse = api.api_version(value)
-    if testresponse.hasError():
+    if testresponse.has_error():
         print(testresponse.error_text)
         return __serverurl(forced)
 

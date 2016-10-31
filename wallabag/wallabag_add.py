@@ -1,14 +1,17 @@
 """
 Module for adding new entries
 """
+import json
 import re
+from sys import exit
 import api
 import conf
-import json
-from sys import exit
 
 
 def add(target_url, title=None, star=False, read=False):
+    """
+    Main function for adding new entries to the wallabag account.
+    """
     conf.load()
 
     valid_url = False
@@ -22,36 +25,38 @@ def add(target_url, title=None, star=False, read=False):
         valid_url = api.is_valid_url(target_url)
 
     if not valid_url:
-        print("Error: Invalid url to add.")
+        print("Error: Invalid url.")
         print()
         exit(-1)
 
     try:
         request = api.api_entry_exists(target_url)
-        if(request.hasError()):
+        if request.has_error():
             print("Error: {0} - {1}".format(request.error_text,
                                             request.error_description))
+            print()
             exit(-1)
         response = json.loads(request.response)
-        if response['exists'] == True:
+        if response['exists']:
             print("The url was already saved.")
             exit(0)
 
-    except api.OAuthException as e:
-        print("Error: {0}".format(e.text))
+    except api.OAuthException as ex:
+        print("Error: {0}".format(ex.text))
         print()
         exit(-1)
 
     try:
         request = api.api_add_entry(target_url, title, star, read)
-        if(request.hasError()):
+        if request.has_error():
             print("Error: {0} - {1}".format(request.error_text,
                                             request.error_description))
+            print()
             exit(-1)
         else:
             print("Entry successfully added.")
             exit(0)
-    except api.OAuthException as e:
-        print("Error: {0}".format(e.text))
+    except api.OAuthException as ex:
+        print("Error: {0}".format(ex.text))
         print()
         exit(-1)

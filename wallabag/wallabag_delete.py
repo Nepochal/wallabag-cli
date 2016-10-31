@@ -1,14 +1,17 @@
 """
 Module for deleting existing entries
 """
+import json
+from sys import exit
 import api
 import conf
 import entry
-import json
-from sys import exit
 
 
 def delete(entry_id, force=False):
+    """
+    Main function for deleting wallabag entries.
+    """
     conf.load()
 
     if not force:
@@ -20,8 +23,8 @@ def delete(entry_id, force=False):
             i = input(entr.title + " [y/N] ")
             if str.lower(i) not in ["y", "yes"]:
                 exit(0)
-        except api.OAuthException as e:
-            print("Error: {0}".format(e.text))
+        except api.OAuthException as ex:
+            print("Error: {0}".format(ex.text))
             print()
             exit(-1)
 
@@ -31,14 +34,14 @@ def delete(entry_id, force=False):
         print("Entry successfully deleted.")
         print()
         exit(0)
-    except api.OAuthException as e:
-        print("Error: {0}".format(e.text))
+    except api.OAuthException as ex:
+        print("Error: {0}".format(ex.text))
         print()
         exit(-1)
 
 
 def __handle_request_error(request):
-    if(request.hasError()):
+    if request.has_error():
         if request.error == api.Error.http_forbidden or request.error == api.Error.http_not_found:
             print("Error: Invalid entry id.")
             print()

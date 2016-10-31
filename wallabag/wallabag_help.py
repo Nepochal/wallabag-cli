@@ -4,6 +4,9 @@ This is the internal help system of wallabag-cli.
 
 
 def show(startscript, command="main"):
+    """
+    Main function for showing help texts.
+    """
     if command == "":
         command = "main"
 

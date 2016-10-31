@@ -1,14 +1,17 @@
 """
 Module for updating existing entries
 """
+import json
+from sys import exit
 import api
 import conf
 import entry
-import json
-from sys import exit
 
 
 def update(entry_id, toggle_read=False, toggle_star=False, new_title=None):
+    """
+    Main method for updating existing wallabag entries.
+    """
     conf.load()
 
     read_value = None
@@ -26,8 +29,8 @@ def update(entry_id, toggle_read=False, toggle_star=False, new_title=None):
             star_value = 0
         elif toggle_star and not entr.starred:
             star_value = 1
-    except api.OAuthException as e:
-        print("Error: {0}".format(e.text))
+    except api.OAuthException as ex:
+        print("Error: {0}".format(ex.text))
         print()
         exit(-1)
 
@@ -38,14 +41,14 @@ def update(entry_id, toggle_read=False, toggle_star=False, new_title=None):
         print("Entry successfully updated.")
         print()
         exit(0)
-    except api.OAuthException as e:
-        print("Error: {0}".format(e.text))
+    except api.OAuthException as ex:
+        print("Error: {0}".format(ex.text))
         print()
         exit(-1)
 
 
 def __handle_request_error(request):
-    if(request.hasError()):
+    if request.hasError():
         if request.error == api.Error.http_forbidden or request.error == api.Error.http_not_found:
             print("Error: Invalid entry id.")
             print()

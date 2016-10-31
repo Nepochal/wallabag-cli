@@ -1,30 +1,32 @@
 """
 List existing entries
 """
-import api
-import conf
-import entry
 import json
 import os
 from sys import exit
-
+import api
+import conf
+import entry
 
 def list_entries(count=None, filter_read=False, filter_starred=None, oldest=False):
+    """
+    Main function for listing wallabag entries.
+    """
     conf.load()
 
-    if count == None:
+    if count is None:
         count = os.get_terminal_size().lines - 2
 
     try:
         request = api.api_list_entries(
             count, filter_read, filter_starred, oldest)
-        if(request.hasError()):
+        if request.has_error():
             print("Error: {0} - {1}".format(request.error_text,
                                             request.error_description))
             exit(-1)
         response = json.loads(request.response)
-    except api.OAuthException as e:
-        print("Error: {0}".format(e.text))
+    except api.OAuthException as ex:
+        print("Error: {0}".format(ex.text))
         print()
         exit(-1)
 
@@ -33,7 +35,9 @@ def list_entries(count=None, filter_read=False, filter_starred=None, oldest=Fals
 
 
 def print_entries(entries, reverse_order=False):
-
+    """
+    Builds the output and prints all entries.
+    """
     maxlength = os.get_terminal_size().columns
     size_entry_id = 0
     show_read_column = False
@@ -45,9 +49,9 @@ def print_entries(entries, reverse_order=False):
             size_entry_id = entry_id_last
 
     for item in entries:
-        if(item.read):
+        if item.read:
             show_read_column = True
-        if(item.starred):
+        if item.starred:
             show_starred_column = True
 
     if reverse_order:
