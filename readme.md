@@ -1,6 +1,6 @@
 # wallabag-cli
 
-Wallabag-cli is a command line client for the self hosted read-it-later app wallabag. Unlike to other services, wallabag is free and open source.
+Wallabag-cli is a command line client for the self hosted read-it-later app [wallabag](https://www.wallabag.org/). Unlike to other services, wallabag is free and open source.
 
 --------------------------------------------------------------------------------
 
