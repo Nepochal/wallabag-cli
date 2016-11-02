@@ -3,12 +3,14 @@ List existing entries
 """
 import json
 import os
+import sys
 from sys import exit
 import api
 import conf
 import entry
 
-def list_entries(count=None, filter_read=False, filter_starred=None, oldest=False):
+
+def list_entries(count=None, filter_read=False, filter_starred=None, oldest=False, trim=True):
     """
     Main function for listing wallabag entries.
     """
@@ -31,14 +33,16 @@ def list_entries(count=None, filter_read=False, filter_starred=None, oldest=Fals
         exit(-1)
 
     entries = entry.entrylist(response['_embedded']["items"])
-    print_entries(entries, (not oldest))
+    print_entries(entries, trim, (not oldest))
 
 
-def print_entries(entries, reverse_order=False):
+def print_entries(entries, trim, reverse_order=False):
     """
     Builds the output and prints all entries.
     """
-    maxlength = os.get_terminal_size().columns
+    maxlength = sys.maxsize
+    if trim:
+        maxlength = os.get_terminal_size().columns
     size_entry_id = 0
     show_read_column = False
     show_starred_column = False
