@@ -4,9 +4,11 @@ Settings and configuration for wallabag-cli.
 import json
 import time
 from collections import OrderedDict
+import os
 from pathlib import Path
 from sys import exit
 
+CONFIG_DIRECTORY = os.path.expanduser("~")
 CONFIG_FILENAME = ".wallabag-cli"
 
 
@@ -90,10 +92,15 @@ def __dicionary2config(configdict):
             __dicionary2config(configdict[item])
 
 
-def is_valid(path=CONFIG_FILENAME):
+def is_valid(custom_path=None):
     """
     Returns True if a config file is suitable.
     """
+    if custom_path is None:
+        path = os.path.join(CONFIG_DIRECTORY, CONFIG_FILENAME)
+    else:
+        path = custom_path
+
     if not exist(path):
         return False
     load(path)
@@ -103,15 +110,20 @@ def is_valid(path=CONFIG_FILENAME):
     return True
 
 
-def exist(path=CONFIG_FILENAME):
+def exist(custom_path=None):
     """
     Returns True if a config file exists.
     """
+    if custom_path is None:
+        path = os.path.join(CONFIG_DIRECTORY, CONFIG_FILENAME)
+    else:
+        path = custom_path
+
     file = Path(path)
     return file.is_file()
 
 
-def save(path=CONFIG_FILENAME):
+def save(custom_path=None):
     """
     Saves the config into a file.
 
@@ -125,6 +137,11 @@ def save(path=CONFIG_FILENAME):
     bool
         True if successful
     """
+    if custom_path is None:
+        path = os.path.join(CONFIG_DIRECTORY, CONFIG_FILENAME)
+    else:
+        path = custom_path
+
     try:
         with open(path, mode='w') as file:
             jsonsave = json.dumps(__configs2dictionary(), indent=4)
@@ -136,7 +153,7 @@ def save(path=CONFIG_FILENAME):
         return False
 
 
-def load(path=CONFIG_FILENAME):
+def load(custom_path=None):
     """
     Loads the config into a dictionary.
 
@@ -150,6 +167,11 @@ def load(path=CONFIG_FILENAME):
     bool
         True if successfull. Otherwise the config will be filles with default values
     """
+    if custom_path is None:
+        path = os.path.join(CONFIG_DIRECTORY, CONFIG_FILENAME)
+    else:
+        path = custom_path
+
     if not exist(path):
         return False
     try:
@@ -165,10 +187,15 @@ def load(path=CONFIG_FILENAME):
         return False
 
 
-def load_or_create(path=CONFIG_FILENAME):
+def load_or_create(custom_path=None):
     """
     Loads aconfig file or creates a blank one.
     """
+    if custom_path is None:
+        path = os.path.join(CONFIG_DIRECTORY, CONFIG_FILENAME)
+    else:
+        path = custom_path
+
     success = False
     if not exist(path):
         success = save(path)
