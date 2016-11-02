@@ -48,7 +48,7 @@ def update(entry_id, toggle_read=False, toggle_star=False, new_title=None):
 
 
 def __handle_request_error(request):
-    if request.hasError():
+    if request.has_error():
         if request.error == api.Error.http_forbidden or request.error == api.Error.http_not_found:
             print("Error: Invalid entry id.")
             print()
