@@ -17,7 +17,7 @@ On Linux you can make the program globally executable for each user by running t
 ```bash
 sudo chown root:root wallabag
 sudo chmod 755 wallabag
-sudo mv wallabag /usr/bin
+sudo mv wallabag /usr/local/bin
 ```
 
 --------------------------------------------------------------------------------
