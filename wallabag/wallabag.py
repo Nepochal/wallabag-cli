@@ -200,13 +200,14 @@ if command == "list":
     count = None
     oldest = False
     trim = True
+    output_count = False
 
     optionlist = argv[2:len(argv)]
     url = argv[len(argv) - 1]
 
     try:
-        args = getopt.getopt(optionlist, "hsuraq:of", [
-            "help", "starred", "unstarred", "read", "unread", "all", "quantity=", "oldest", "full"])[0]
+        args = getopt.getopt(optionlist, "hsuraq:ofc", [
+            "help", "starred", "unstarred", "read", "unread", "all", "quantity=", "oldest", "full", "count"])[0]
     except getopt.GetoptError as ex:
         print("Error: Invalid option \"{0}\"".format(ex.opt))
         print()
@@ -237,6 +238,11 @@ if command == "list":
             oldest = True
         if opt in ('-f', '--full'):
             trim = False
+        if opt in ('-c', '--count'):
+            output_count = True
 
-    wallabag_list.list_entries(
-        count, filter_read, filter_starred, oldest, trim)
+    if output_count:
+        wallabag_list.count_entries(filter_read, filter_starred)
+    else:
+        wallabag_list.list_entries(
+            count, filter_read, filter_starred, oldest, trim)
