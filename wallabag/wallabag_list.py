@@ -3,6 +3,7 @@ List existing entries
 """
 import json
 import os
+import platform
 import sys
 from sys import exit
 import api
@@ -89,7 +90,10 @@ def print_entries(entries, trim, reverse_order=False):
 
         read = " "
         if item.read:
-            read = "✔"
+            if platform.system() == "Windows":
+                read = "r"
+            else:
+                read = "✔"
 
         starred = " "
         if item.starred:
