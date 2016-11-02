@@ -98,6 +98,7 @@ Options:
   -u, --unstarred                Show only unstarred entries
   -o, --oldest                   Show oldest matches instead of the newest
   -f, --full                     Do not trim the titles to fit the length of the cli
+  -c, --count                    Show a sum of matching entries
 """.format(startscript)
     index['list'] = list_txt
 
