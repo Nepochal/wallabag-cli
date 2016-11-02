@@ -25,6 +25,7 @@ Commands:
   update         Change the read- or starred-status of an existing entry
                  or change the title.
   read           Toggle the read-status of an entry.
+  star           Toggle the starred-status of an entry.
 
 General Options:
   -h, --help     Show help.
@@ -137,6 +138,21 @@ Options:
   -h, --help             Show help
 """.format(startscript)
     index['read'] = read_txt
+
+    # star
+    star_txt = """
+Usage:
+  {0} star [options] <entry-id>
+
+Description:
+  Toggle the starred-status of an existing entry.
+  This is an alias for "{0} update --starred <entry-id>".
+  The entry-id can be found in "{0} list" for example.
+
+Options:
+  -h, --help             Show help
+""".format(startscript)
+    index['star'] = star_txt
 
     if not command in index:
         print("Error: Invalid command \"{0}\"!".format(command))
