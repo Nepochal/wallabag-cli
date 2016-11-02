@@ -238,4 +238,5 @@ if command == "list":
         if opt in ('-f', '--full'):
             trim = False
 
-    wallabag_list.list_entries(count, filter_read, filter_starred, oldest, trim)
+    wallabag_list.list_entries(
+        count, filter_read, filter_starred, oldest, trim)
