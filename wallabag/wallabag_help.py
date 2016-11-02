@@ -22,7 +22,8 @@ Commands:
   add            Add a new entry to wallabag.
   delete         Delete an entry.
   list           List the entries on the wallabag account.
-  update         Change the read- or starred-status of an existing entry or change the title.
+  update         Change the read- or starred-status of an existing entry
+                 or change the title.
 
 General Options:
   -h, --help     Show help.
@@ -72,7 +73,8 @@ Usage:
   {0} delete [options] <entry-id>
 
 Description:
-  Delete an entry from wallabag. The entry-id can be found in "{0} list" for example.
+  Delete an entry from wallabag.
+  The entry-id can be found in "{0} list" for example.
 
 Options:
   -h, --help   Show help
@@ -97,7 +99,8 @@ Options:
   -s, --starred                  Show only starred entries
   -u, --unstarred                Show only unstarred entries
   -o, --oldest                   Show oldest matches instead of the newest
-  -f, --full                     Do not trim the titles to fit the length of the cli
+  -f, --full                     Do not trim the titles to fit the length
+                                 of the cli
   -c, --count                    Show a sum of matching entries
 """.format(startscript)
     index['list'] = list_txt
@@ -108,7 +111,8 @@ Usage:
   {0} update [options] <entry-id>
 
 Description:
-  Toggle the read- or starred status or change the title of an existing entry. The entry-id can be found in "{0} list" for example.
+  Toggle the read- or starred status or change the title of an existing entry.
+  The entry-id can be found in "{0} list" for example.
 
 Options:
   -h, --help             Show help
