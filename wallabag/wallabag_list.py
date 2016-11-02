@@ -10,18 +10,21 @@ import conf
 import entry
 
 
-def list_entries(count=None, filter_read=False, filter_starred=None, oldest=False, trim=True):
+def list_entries(custom_quantity=None, filter_read=False, filter_starred=None, oldest=False, trim=True):
     """
     Main function for listing wallabag entries.
     """
     conf.load()
 
-    if count is None:
-        count = os.get_terminal_size().lines - 2
+    quantity = None
+    if custom_quantity is None:
+        quantity = os.get_terminal_size().lines - 2
+    else:
+        quantity = custom_quantity
 
     try:
         request = api.api_list_entries(
-            count, filter_read, filter_starred, oldest)
+            quantity, filter_read, filter_starred, oldest)
         if request.has_error():
             print("Error: {0} - {1}".format(request.error_text,
                                             request.error_description))
@@ -34,6 +37,27 @@ def list_entries(count=None, filter_read=False, filter_starred=None, oldest=Fals
 
     entries = entry.entrylist(response['_embedded']["items"])
     print_entries(entries, trim, (not oldest))
+
+
+def count_entries(filter_read=False, filter_starred=None):
+    """
+    Prints the number of entries to the standard output.
+    """
+    conf.load()
+
+    try:
+        request = api.api_list_entries(
+            sys.maxsize, filter_read, filter_starred)
+        if request.has_error():
+            print("Error: {0} - {1}".format(request.error_text,
+                                            request.error_description))
+            exit(-1)
+        response = json.loads(request.response)
+    except api.OAuthException as ex:
+        print("Error: {0}".format(ex.text))
+        print()
+        exit(-1)
+    print(len(response["_embedded"]["items"]))
 
 
 def print_entries(entries, trim, reverse_order=False):
