@@ -89,15 +89,15 @@ Description:
   Gives a summary of entries in wallabag. Use options to filter the results.
 
 Options:
-  -h, --help                  Show help
-  -c, --count <"all"|number>  Set the number of entries to show
-  --unread                    Show only unread entries (default)
-  -r, --read                  Show only read entries
-  -a, --all                   Show read as well as unread entries
-  -s, --starred               Show only starred entries
-  -u, --unstarred             Show only unstarred entries
-  -o, --oldest                Show oldest matches instead of the newest
-  -f, --full                  Do not trim the titles to fit the length of the cli
+  -h, --help                     Show help
+  -q, --quantity <"all"|number>  Set the number of entries to show
+  --unread                       Show only unread entries (default)
+  -r, --read                     Show only read entries
+  -a, --all                      Show read as well as unread entries
+  -s, --starred                  Show only starred entries
+  -u, --unstarred                Show only unstarred entries
+  -o, --oldest                   Show oldest matches instead of the newest
+  -f, --full                     Do not trim the titles to fit the length of the cli
 """.format(startscript)
     index['list'] = list_txt
 

@@ -205,8 +205,8 @@ if command == "list":
     url = argv[len(argv) - 1]
 
     try:
-        args = getopt.getopt(optionlist, "hsurac:of", [
-            "help", "starred", "unstarred", "read", "unread", "all", "count=", "oldest", "full"])[0]
+        args = getopt.getopt(optionlist, "hsuraq:of", [
+            "help", "starred", "unstarred", "read", "unread", "all", "quantity=", "oldest", "full"])[0]
     except getopt.GetoptError as ex:
         print("Error: Invalid option \"{0}\"".format(ex.opt))
         print()
@@ -223,7 +223,7 @@ if command == "list":
             filter_read = None
         if opt in ('-a', '--all'):
             filter_read = None
-        if opt in ('-c', '--count'):
+        if opt in ('-q', '--quantity'):
             if arg == "all":
                 arg = 65535
             try:
