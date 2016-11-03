@@ -111,10 +111,7 @@ def is_valid(custom_path=None):
     """
     Returns True if a config file is suitable.
     """
-    if custom_path is None:
-        path = os.path.join(CONFIG_DIRECTORY, CONFIG_FILENAME)
-    else:
-        path = custom_path
+    path = get_path(custom_path)
 
     if not exist(path):
         return False
@@ -129,10 +126,7 @@ def exist(custom_path=None):
     """
     Returns True if a config file exists.
     """
-    if custom_path is None:
-        path = os.path.join(CONFIG_DIRECTORY, CONFIG_FILENAME)
-    else:
-        path = custom_path
+    path = get_path(custom_path)
 
     file = Path(path)
     return file.is_file()
@@ -152,10 +146,7 @@ def save(custom_path=None):
     bool
         True if successful
     """
-    if custom_path is None:
-        path = os.path.join(CONFIG_DIRECTORY, CONFIG_FILENAME)
-    else:
-        path = custom_path
+    path = get_path(custom_path)
 
     try:
         with open(path, mode='w') as file:
@@ -182,10 +173,7 @@ def load(custom_path=None):
     bool
         True if successfull. Otherwise the config will be filles with default values
     """
-    if custom_path is None:
-        path = os.path.join(CONFIG_DIRECTORY, CONFIG_FILENAME)
-    else:
-        path = custom_path
+    path = get_path(custom_path)
 
     if not exist(path):
         return False
@@ -206,10 +194,7 @@ def load_or_create(custom_path=None):
     """
     Loads aconfig file or creates a blank one.
     """
-    if custom_path is None:
-        path = os.path.join(CONFIG_DIRECTORY, CONFIG_FILENAME)
-    else:
-        path = custom_path
+    path = get_path(custom_path)
 
     success = False
     if not exist(path):
