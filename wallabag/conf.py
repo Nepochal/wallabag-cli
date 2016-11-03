@@ -4,8 +4,10 @@ Settings and configuration for wallabag-cli.
 import json
 import time
 from collections import OrderedDict
+from Crypto.Cipher import AES
+from Crypto.Hash import MD5
 import getpass
-import hashlib
+import math
 import os
 from pathlib import Path
 import socket
@@ -62,7 +64,20 @@ def get_config(name):
 def __cryptkey():
     s1 = getpass.getuser()
     s2 = socket.gethostname()
-    return (hashlib.md5((s1 + s2).encode("utf-8")).hexdigest())
+    return MD5.new((s1 + s2).encode("utf-8")).hexdigest()
+
+
+def __encrypt(value):
+    blocks = math.ceil(len(value) / 16)
+    value = value.ljust(blocks * 16, ' ')
+    return AES.new(__cryptkey()).encrypt(value)
+
+
+def __decrypt(value):
+    ret = AES.new(__cryptkey()).decrypt(value)
+    ret = ret.decode("utf-8")
+    ret = ret.rstrip()
+    return ret
 
 
 def __configs2dictionary():
