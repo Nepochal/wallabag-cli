@@ -8,7 +8,7 @@ import api
 import conf
 
 
-def add(target_url, title=None, star=False, read=False):
+def add(target_url, title=None, star=False, read=False, quiet=False):
     """
     Main function for adding new entries to the wallabag account.
     """
@@ -38,7 +38,8 @@ def add(target_url, title=None, star=False, read=False):
             exit(-1)
         response = json.loads(request.response)
         if response['exists']:
-            print("The url was already saved.")
+            if not quiet:
+                print("The url was already saved.")
             exit(0)
 
     except api.OAuthException as ex:
@@ -54,7 +55,8 @@ def add(target_url, title=None, star=False, read=False):
             print()
             exit(-1)
         else:
-            print("Entry successfully added.")
+            if not quiet:
+                print("Entry successfully added.")
             exit(0)
     except api.OAuthException as ex:
         print("Error: {0}".format(ex.text))

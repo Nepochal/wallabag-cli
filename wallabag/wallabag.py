@@ -112,10 +112,11 @@ if command == "add":
     title = None
     star = False
     read = False
+    quiet = False
 
     try:
-        args = getopt.getopt(optionlist, "ht:sr", [
-            "help", "config=", "title=", "starred", "read"])[0]
+        args = getopt.getopt(optionlist, "ht:srq", [
+            "help", "config=", "title=", "starred", "read", "quiet"])[0]
     except getopt.GetoptError as ex:
         print("Error: Invalid option \"{0}\"".format(ex.opt))
         print()
@@ -127,7 +128,9 @@ if command == "add":
             star = True
         if opt in ('-r', '--read'):
             read = True
-    wallabag_add.add(url, title, star, read)
+        if opt in ('-q', '--quiet'):
+            quiet = True
+    wallabag_add.add(url, title, star, read, quiet)
 
 if command == "update":
     if "-h" in argv[2:len(argv)] or "--help" in argv[2:len(argv)]:

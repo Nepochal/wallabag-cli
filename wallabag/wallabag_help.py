@@ -68,6 +68,7 @@ Options:
   -t, --title <title>  Add a custom title.
   -s, --starred        Mark as starred.
   -r, --read           Mark as read.
+  -q, --quiet          Hide the output if no error occurs.
   --config=<path>      Use a custom config file.
 """.format(startscript)
     index['add'] = add_txt
