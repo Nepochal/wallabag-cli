@@ -11,6 +11,8 @@ from sys import exit
 CONFIG_DIRECTORY = os.path.expanduser("~")
 CONFIG_FILENAME = ".wallabag-cli"
 
+__global_custom_path = None
+
 
 class Configs():
     """
@@ -90,6 +92,19 @@ def __dicionary2config(configdict):
             set_config(item, configdict[item])
         elif isinstance(configdict[item], dict):
             __dicionary2config(configdict[item])
+
+
+def set_path(path):
+    global __global_custom_path
+    __global_custom_path = path
+
+
+def get_path(local_custom_path=None):
+    if local_custom_path is not None:
+        return local_custom_path
+    if __global_custom_path is not None:
+        return __global_custom_path
+    return os.path.join(CONFIG_DIRECTORY, CONFIG_FILENAME)
 
 
 def is_valid(custom_path=None):
