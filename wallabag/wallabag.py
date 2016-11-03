@@ -27,6 +27,11 @@ if platform.system() == "Windows":
     if "65001" not in codepage:
         subprocess.check_output(['chcp', '65001'], shell=True)
 
+# Determine custom config path
+for arg in argv:
+    if arg[0:9] == "--config=":
+        conf.set_path(arg[9:len(arg)])
+
 # Determine command or general standalone option
 if len(argv) == 1 or argv[1] in {'-h', '--help'}:
     help(argv[0])
@@ -67,7 +72,7 @@ if command == "config":
 
     try:
         args = getopt.getopt(optionlist, "hcpo", [
-            "help", "check", "password", "oauth"])[0]
+            "help", "config=", "check", "password", "oauth"])[0]
     except getopt.GetoptError as ex:
         print("Error: Invalid option \"{0}\"".format(ex.opt))
         print()
@@ -110,7 +115,7 @@ if command == "add":
 
     try:
         args = getopt.getopt(optionlist, "ht:sr", [
-            "help", "title=", "starred", "read"])[0]
+            "help", "config=", "title=", "starred", "read"])[0]
     except getopt.GetoptError as ex:
         print("Error: Invalid option \"{0}\"".format(ex.opt))
         print()
@@ -143,7 +148,7 @@ if command == "update":
 
     try:
         args = getopt.getopt(optionlist, "ht:sr", [
-            "help", "title=", "starred", "read"])[0]
+            "help", "config=", "title=", "starred", "read"])[0]
     except getopt.GetoptError as ex:
         print("Error: Invalid option \"{0}\"".format(ex.opt))
         print()
@@ -179,7 +184,7 @@ if command == "read":
 
     try:
         args = getopt.getopt(optionlist, "h", [
-            "help"])[0]
+            "help", "config="])[0]
     except getopt.GetoptError as ex:
         print("Error: Invalid option \"{0}\"".format(ex.opt))
         print()
@@ -201,7 +206,7 @@ if command == "star":
 
     try:
         args = getopt.getopt(optionlist, "h", [
-            "help"])[0]
+            "help", "config="])[0]
     except getopt.GetoptError as ex:
         print("Error: Invalid option \"{0}\"".format(ex.opt))
         print()
@@ -224,7 +229,7 @@ if command == "delete":
 
     try:
         args = getopt.getopt(optionlist, "hf", [
-            "help", "force"])[0]
+            "help", "config=", "force"])[0]
     except getopt.GetoptError as e:
         print("Error: Invalid option \"{0}\"".format(e.opt))
         print()
@@ -251,7 +256,7 @@ if command == "list":
 
     try:
         args = getopt.getopt(optionlist, "hsuraq:ofc", [
-            "help", "starred", "unstarred", "read", "unread", "all", "quantity=", "oldest", "full", "count"])[0]
+            "help", "config=", "starred", "unstarred", "read", "unread", "all", "quantity=", "oldest", "full", "count"])[0]
     except getopt.GetoptError as ex:
         print("Error: Invalid option \"{0}\"".format(ex.opt))
         print()
