@@ -4,8 +4,11 @@ Settings and configuration for wallabag-cli.
 import json
 import time
 from collections import OrderedDict
+import getpass
+import hashlib
 import os
 from pathlib import Path
+import socket
 from sys import exit
 
 CONFIG_DIRECTORY = os.path.expanduser("~")
@@ -54,6 +57,12 @@ def get_config(name):
     wish to get a valid oauth2 token.
     """
     return getattr(Configs, name, None)
+
+
+def __cryptkey():
+    s1 = getpass.getuser()
+    s2 = socket.gethostname()
+    return (hashlib.md5((s1 + s2).encode("utf-8")).hexdigest())
 
 
 def __configs2dictionary():
