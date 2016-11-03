@@ -148,10 +148,11 @@ if command == "update":
     toggle_star = False
     toggle_read = False
     set_required_parameter = False
+    quiet = False
 
     try:
-        args = getopt.getopt(optionlist, "ht:sr", [
-            "help", "config=", "title=", "starred", "read"])[0]
+        args = getopt.getopt(optionlist, "ht:srq", [
+            "help", "config=", "title=", "starred", "read", "quiet"])[0]
     except getopt.GetoptError as ex:
         print("Error: Invalid option \"{0}\"".format(ex.opt))
         print()
@@ -166,11 +167,13 @@ if command == "update":
         if opt in ('-r', '--read'):
             toggle_read = True
             set_required_parameter = True
+        if opt in ('-q', '--quiet'):
+            quiet = True
     if not set_required_parameter:
         print("Error: No parameter given.")
         print()
         exit(-1)
-    wallabag_update.update(entry_id, toggle_read, toggle_star, title)
+    wallabag_update.update(entry_id, toggle_read, toggle_star, title, quiet)
 
 if command == "read":
     if "-h" in argv[2:len(argv)] or "--help" in argv[2:len(argv)]:

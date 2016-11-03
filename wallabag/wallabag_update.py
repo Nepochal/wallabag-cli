@@ -8,7 +8,7 @@ import conf
 import entry
 
 
-def update(entry_id, toggle_read=False, toggle_star=False, new_title=None):
+def update(entry_id, toggle_read=False, toggle_star=False, new_title=None, quiet=False):
     """
     Main method for updating existing wallabag entries.
     """
@@ -38,8 +38,9 @@ def update(entry_id, toggle_read=False, toggle_star=False, new_title=None):
         request = api.api_update_entry(
             entry_id, new_title, star_value, read_value)
         __handle_request_error(request)
-        print("Entry successfully updated.")
-        print()
+        if not quiet:
+            print("Entry successfully updated.")
+            print()
         exit(0)
     except api.OAuthException as ex:
         print("Error: {0}".format(ex.text))

@@ -85,7 +85,7 @@ Description:
 Options:
   -h, --help       Show help.
   -f, --force      Do not ask before deletion.
-  -q, --quiet          Hide the output if no error occurs.
+  -q, --quiet      Hide the output if no error occurs.
   --config=<path>  Use a custom config file.
 """.format(startscript)
     index['delete'] = delete_txt
@@ -128,6 +128,7 @@ Options:
   -r, --read             Toggle the read-status.
   -s, --starred          Toggle the starred-status.
   -t, --title <"title">  Change the title.
+  -q, --quiet            Hide the output if no error occurs.
   --config=<path>        Use a custom config file.
 """.format(startscript)
     index['update'] = update_txt
