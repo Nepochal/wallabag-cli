@@ -72,7 +72,9 @@ def __encrypt(value):
     blocks = math.ceil(len(value) / 16)
     value = value.ljust(blocks * 16, ' ')
     ret = AES.new(__cryptkey()).encrypt(value)
-    return base64.b64encode(ret)
+    ret = base64.b64encode(ret)
+    ret = ret.decode("utf-8")
+    return ret
 
 
 def __decrypt(value):
@@ -99,10 +101,10 @@ def __configs2dictionary():
 
     wallabag_api['serverurl'] = Configs.serverurl
     wallabag_api['username'] = Configs.username
-    wallabag_api['password'] = Configs.password
+    wallabag_api['password'] = __encrypt(Configs.password)
 
     wallabag_api_oauth2['client'] = Configs.client
-    wallabag_api_oauth2['secret'] = Configs.secret
+    wallabag_api_oauth2['secret'] = __encrypt(Configs.secret)
     wallabag_api["oauth2"] = wallabag_api_oauth2
 
     wallabag_api_oauth2_token["access_token"] = Configs.access_token
@@ -116,6 +118,8 @@ def __dicionary2config(configdict):
     for item in configdict:
         if isinstance(configdict[item], str) or isinstance(configdict[item], int) or \
                 isinstance(configdict[item], float):
+            if item in ["password", "secret"]:
+                configdict[item] = __decrypt(configdict[item])
             set_config(item, configdict[item])
         elif isinstance(configdict[item], dict):
             __dicionary2config(configdict[item])
