@@ -187,15 +187,19 @@ if command == "read":
 
     optionlist = argv[2:len(argv) - 1]
     entry_id = argv[len(argv) - 1]
+    quiet = False
 
     try:
-        args = getopt.getopt(optionlist, "h", [
-            "help", "config="])[0]
+        args = getopt.getopt(optionlist, "hq", [
+            "help", "config=", "quiet"])[0]
     except getopt.GetoptError as ex:
         print("Error: Invalid option \"{0}\"".format(ex.opt))
         print()
         exit(-1)
-    wallabag_update.update(entry_id, toggle_read=True)
+    for opt, arg in args:
+        if opt in ('-q', '--quiet'):
+            quiet = True
+    wallabag_update.update(entry_id, toggle_read=True, quiet=quiet)
 
 if command == "star":
     if "-h" in argv[2:len(argv)] or "--help" in argv[2:len(argv)]:
@@ -209,15 +213,19 @@ if command == "star":
 
     optionlist = argv[2:len(argv) - 1]
     entry_id = argv[len(argv) - 1]
+    quiet = False
 
     try:
-        args = getopt.getopt(optionlist, "h", [
-            "help", "config="])[0]
+        args = getopt.getopt(optionlist, "hq", [
+            "help", "config=", "quiet"])[0]
     except getopt.GetoptError as ex:
         print("Error: Invalid option \"{0}\"".format(ex.opt))
         print()
         exit(-1)
-    wallabag_update.update(entry_id, toggle_star=True)
+    for opt, arg in args:
+        if opt in ('-q', '--quiet'):
+            quiet = True
+    wallabag_update.update(entry_id, toggle_star=True, quiet=quiet)
 
 if command == "delete":
     if "-h" in argv[2:len(argv)] or "--help" in argv[2:len(argv)]:

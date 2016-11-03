@@ -145,6 +145,7 @@ Description:
 
 Options:
   -h, --help       Show help.
+  -q, --quiet      Hide the output if no error occurs.
   --config=<path>  Use a custom config file.
 """.format(startscript)
     index['read'] = read_txt
@@ -161,6 +162,7 @@ Description:
 
 Options:
   -h, --help       Show help.
+  -q, --quiet      Hide the output if no error occurs.
   --config=<path>  Use a custom config file.
 """.format(startscript)
     index['star'] = star_txt
