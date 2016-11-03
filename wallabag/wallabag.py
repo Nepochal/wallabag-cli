@@ -15,7 +15,7 @@ import wallabag_delete
 import wallabag_list
 import wallabag_update
 
-PROGRAM_VERSION = "0.5.0-alpha"
+PROGRAM_VERSION = "0.6.0-alpha"
 
 command = None
 need_config = False
