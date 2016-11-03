@@ -1,6 +1,7 @@
 """
 Settings and configuration for wallabag-cli.
 """
+import base64
 import json
 import time
 from collections import OrderedDict
@@ -70,11 +71,13 @@ def __cryptkey():
 def __encrypt(value):
     blocks = math.ceil(len(value) / 16)
     value = value.ljust(blocks * 16, ' ')
-    return AES.new(__cryptkey()).encrypt(value)
+    ret = AES.new(__cryptkey()).encrypt(value)
+    return base64.b64encode(ret)
 
 
 def __decrypt(value):
-    ret = AES.new(__cryptkey()).decrypt(value)
+    ret = base64.b64decode(value)
+    ret = AES.new(__cryptkey()).decrypt(ret)
     ret = ret.decode("utf-8")
     ret = ret.rstrip()
     return ret
