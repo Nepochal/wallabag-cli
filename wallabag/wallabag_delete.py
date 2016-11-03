@@ -8,7 +8,7 @@ import conf
 import entry
 
 
-def delete(entry_id, force=False):
+def delete(entry_id, force=False, quiet=False):
     """
     Main function for deleting wallabag entries.
     """
@@ -31,8 +31,9 @@ def delete(entry_id, force=False):
     try:
         request = api.api_delete_entry(entry_id)
         __handle_request_error(request)
-        print("Entry successfully deleted.")
-        print()
+        if not quiet:
+            print("Entry successfully deleted.")
+            print()
         exit(0)
     except api.OAuthException as ex:
         print("Error: {0}".format(ex.text))

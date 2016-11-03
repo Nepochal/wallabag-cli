@@ -85,6 +85,7 @@ Description:
 Options:
   -h, --help       Show help.
   -f, --force      Do not ask before deletion.
+  -q, --quiet          Hide the output if no error occurs.
   --config=<path>  Use a custom config file.
 """.format(startscript)
     index['delete'] = delete_txt
