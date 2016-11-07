@@ -2,6 +2,7 @@
 Show a wallabag entry
 """
 import json
+from bs4 import BeautifulSoup
 import api
 import conf
 import entry
@@ -20,7 +21,14 @@ def show(entry_id):
         print()
         exit(-1)
 
-    print(entr.content)
+    output = html2text(entr.content)
+    print(output)
+
+
+def html2text(html):
+    soup = BeautifulSoup(html, "html.parser")
+
+    return soup.text
 
 
 def __handle_request_error(request):
@@ -32,3 +40,5 @@ def __handle_request_error(request):
         print("Error: {0} - {1}".format(request.error_text,
                                         request.error_description))
         exit(-1)
+
+show(602)
