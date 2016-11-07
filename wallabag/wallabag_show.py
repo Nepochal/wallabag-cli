@@ -26,11 +26,23 @@ def show(entry_id):
 
     output = html2text(entr.content)
 
-    __print_formatted(output)
+    for line in output.splitlines():
+        __print_formatted(line)
+        print()
 
 
 def html2text(html):
     soup = BeautifulSoup(html, "html.parser")
+
+    # Color h1-h3
+    h1colors = '\033[93m'
+    h1colore = '\033[0m'
+    for h1 in soup.findAll('h1'):
+        h1.string = "{0}{1}{2}\n".format(h1colors, h1.string, h1colore)
+    for h2 in soup.findAll('h2'):
+        h2.string = "{0}{1}{2}\n".format(h1colors, h2.string, h1colore)
+    for h3 in soup.findAll('h3'):
+        h3.string = "{0}{1}{2}\n".format(h1colors, h3.string, h1colore)
 
     # Replace hr with visual lines
     hrstring = "".ljust(os.get_terminal_size().columns, '-')
@@ -47,7 +59,7 @@ def html2text(html):
             alt = " \"{0}\"".format(img['alt'])
         except KeyError:
             alt = ""
-        replace.string = "[IMAGE{0}]".format(alt)
+        replace.string = "[IMAGE{0}]\n".format(alt)
         img.insert_after(replace)
         img.unwrap()
 
@@ -70,5 +82,3 @@ def __handle_request_error(request):
         print("Error: {0} - {1}".format(request.error_text,
                                         request.error_description))
         exit(-1)
-
-show(590)
