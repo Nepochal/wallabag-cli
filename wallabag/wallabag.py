@@ -13,6 +13,7 @@ import wallabag_add
 import wallabag_config
 import wallabag_delete
 import wallabag_list
+import wallabag_show
 import wallabag_update
 
 PROGRAM_VERSION = "0.6.0-alpha"
@@ -45,7 +46,7 @@ elif argv[1] in {'--about'}:
     print()
     print("This software is licensed under the MIT.")
     exit(0)
-elif argv[1] in ["config", "add", "update", "read", "star", "delete", "list"]:
+elif argv[1] in ["config", "add", "update", "read", "star", "delete", "list", "show"]:
     command = argv[1]
     need_config = command != "config"
 elif argv[1][0] != '-':
@@ -312,3 +313,27 @@ if command == "list":
     else:
         wallabag_list.list_entries(
             count, filter_read, filter_starred, oldest, trim)
+
+if command == "show":
+    if "-h" in argv[2:len(argv)] or "--help" in argv[2:len(argv)]:
+        help(argv[0], command)
+        exit(0)
+
+    if len(argv) < 3:
+        print("Error: Missing entry-id.")
+        print()
+        exit(-1)
+
+    optionlist = argv[2:len(argv) - 1]
+    entry_id = argv[len(argv) - 1]
+
+    try:
+        args = getopt.getopt(optionlist, "h", [
+            "help", "config="])[0]
+    except getopt.GetoptError as ex:
+        print("Error: Invalid option \"{0}\"".format(ex.opt))
+        print()
+        exit(-1)
+    for opt, arg in args:
+        pass
+    wallabag_show.show(entry_id)
