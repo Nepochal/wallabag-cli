@@ -11,7 +11,7 @@ import conf
 import entry
 
 
-def show(entry_id, colors=True):
+def show(entry_id, colors=True, raw=False):
     """
     Main function for showing an entry.
     """
@@ -30,7 +30,9 @@ def show(entry_id, colors=True):
     article = html2text(entr.content, colors)
 
     output = "{0}\n{1}\n{2}".format(title, delimiter, article)
-    output = __format_text(output)
+
+    if not raw:
+        output = __format_text(output)
 
     print(output)
 
