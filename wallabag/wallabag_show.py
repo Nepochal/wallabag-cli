@@ -7,6 +7,7 @@ import api
 import conf
 import entry
 
+
 def show(entry_id):
     """
     Main function for showing an entry.
@@ -28,6 +29,17 @@ def show(entry_id):
 def html2text(html):
     soup = BeautifulSoup(html, "html.parser")
 
+    # Replace images by information-texts
+    for img in soup.findAll('img'):
+        replace = soup.new_tag('p')
+        try:
+            alt = " \"{0}\"".format(img['alt'])
+        except KeyError:
+            alt = ""
+        replace.string = "[IMAGE{0}]".format(alt)
+        img.insert_after(replace)
+        img.unwrap()
+
     return soup.text
 
 
@@ -40,5 +52,3 @@ def __handle_request_error(request):
         print("Error: {0} - {1}".format(request.error_text,
                                         request.error_description))
         exit(-1)
-
-show(602)
