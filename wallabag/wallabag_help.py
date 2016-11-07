@@ -22,6 +22,7 @@ Commands:
   add              Add a new entry to wallabag.
   delete           Delete an entry.
   list             List the entries on the wallabag account.
+  show             Show an entry.
   update           Change the read- or starred-status of an existing entry
                    or change the title.
   read             Toggle the read-status of an entry.
@@ -113,6 +114,22 @@ Options:
   --config=<path>                Use a custom config file.
 """.format(startscript)
     index['list'] = list_txt
+
+    # show
+    show_txt = """
+Usage:
+  {0} show [options] <entry-id>
+
+Description:
+  Show the text of an entry.
+  The entry-id can be found in "{0} list" for example.
+
+Options:
+  -h, --help             Show help.
+  --config=<path>        Use a custom config file.
+""".format(startscript)
+    index['show'] = show_txt
+
 
     # update
     update_txt = """
