@@ -13,6 +13,7 @@ Please have a look at the [documentation overview](docs/index.md) to begin using
 **Already implemented features**
 
 - List entries (filterable)
+- Show the content of an entry
 - Add new entries
 - Delete entries
 - Mark existing entries as read
@@ -21,5 +22,4 @@ Please have a look at the [documentation overview](docs/index.md) to begin using
 
 **Missing features**
 
-- Show entry
 - Curses interface for interactive use
