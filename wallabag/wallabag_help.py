@@ -125,8 +125,12 @@ Description:
   The entry-id can be found in "{0} list" for example.
 
 Options:
-  -h, --help             Show help.
-  --config=<path>        Use a custom config file.
+  -h, --help       Show help.
+  -r, --raw        Disable wordwise trimming.
+  --no-color       Disable colored output.
+  --html           Show the entry as html instead of optimized output for
+                   the cli.
+  --config=<path>  Use a custom config file.
 """.format(startscript)
     index['show'] = show_txt
 
