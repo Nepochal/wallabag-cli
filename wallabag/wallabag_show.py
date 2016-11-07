@@ -11,7 +11,7 @@ import conf
 import entry
 
 
-def show(entry_id):
+def show(entry_id, colors=True):
     """
     Main function for showing an entry.
     """
@@ -27,7 +27,7 @@ def show(entry_id):
 
     title = entr.title
     delimiter = "".ljust(os.get_terminal_size().columns, '=')
-    article = html2text(entr.content)
+    article = html2text(entr.content, colors)
 
     output = "{0}\n{1}\n{2}".format(title, delimiter, article)
     output = __format_text(output)
@@ -35,26 +35,30 @@ def show(entry_id):
     print(output)
 
 
-def html2text(html):
+def html2text(html, colors=True):
     soup = BeautifulSoup(html, "html.parser")
 
     # Color h1-h3
-    h1colors = '\033[93m'
-    h1colore = '\033[0m'
+    if colors:
+        h1colors = '\033[93m'
+        h1colore = '\033[0m'
+    else:
+        h1colors = h1colore = ""
     for h1 in soup.findAll('h1'):
-        h1.string = "{0}{1}{2}\n".format(h1colors, h1.string, h1colore)
+        h1.string = "\n{0}{1}{2}".format(h1colors, h1.string, h1colore)
     for h2 in soup.findAll('h2'):
-        h2.string = "{0}{1}{2}\n".format(h1colors, h2.string, h1colore)
+        h2.string = "\n{0}{1}{2}".format(h1colors, h2.string, h1colore)
     for h3 in soup.findAll('h3'):
-        h3.string = "{0}{1}{2}\n".format(h1colors, h3.string, h1colore)
+        h3.string = "\n{0}{1}{2}".format(h1colors, h3.string, h1colore)
 
-    # Color bold texts
-    bcolors = '\033[92m'
-    bcolore = '\033[0m'
-    for bold in soup.findAll('b'):
-        bold.string = "{0}{1}{2}\n".format(bcolors, bold.string, bcolore)
-    for bold in soup.findAll('strong'):
-        bold.string = "{0}{1}{2}\n".format(bcolors, bold.string, bcolore)
+    if colors:
+        # Color bold texts
+        bcolors = '\033[92m'
+        bcolore = '\033[0m'
+        for bold in soup.findAll('b'):
+            bold.string = "{0}{1}{2}".format(bcolors, bold.string, bcolore)
+        for bold in soup.findAll('strong'):
+            bold.string = "{0}{1}{2}".format(bcolors, bold.string, bcolore)
 
     # Replace hr with visual lines
     hrstring = "".ljust(os.get_terminal_size().columns, '-')
