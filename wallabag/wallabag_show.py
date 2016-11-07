@@ -44,6 +44,14 @@ def html2text(html):
     for h3 in soup.findAll('h3'):
         h3.string = "{0}{1}{2}\n".format(h1colors, h3.string, h1colore)
 
+    # Color bold texts
+    bcolors = '\033[91m'
+    bcolore = '\033[0m'
+    for bold in soup.findAll('b'):
+        bold.string = "{0}{1}{2}\n".format(bcolors, bold.string, bcolore)
+    for bold in soup.findAll('strong'):
+        bold.string = "{0}{1}{2}\n".format(bcolors, bold.string, bcolore)
+
     # Replace hr with visual lines
     hrstring = "".ljust(os.get_terminal_size().columns, '-')
     for hr in soup.findAll('hr'):
