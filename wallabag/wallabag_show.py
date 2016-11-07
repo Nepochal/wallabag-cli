@@ -4,6 +4,7 @@ Show a wallabag entry
 import formatter
 import json
 import os
+import io
 from bs4 import BeautifulSoup
 import api
 import conf
@@ -24,11 +25,14 @@ def show(entry_id):
         print()
         exit(-1)
 
-    output = html2text(entr.content)
+    title = entr.title
+    delimiter = "".ljust(os.get_terminal_size().columns, '=')
+    article = html2text(entr.content)
 
-    for line in output.splitlines():
-        __print_formatted(line)
-        print()
+    output = "{0}\n{1}\n{2}".format(title, delimiter, article)
+    output = __format_text(output)
+
+    print(output)
 
 
 def html2text(html):
@@ -45,7 +49,7 @@ def html2text(html):
         h3.string = "{0}{1}{2}\n".format(h1colors, h3.string, h1colore)
 
     # Color bold texts
-    bcolors = '\033[91m'
+    bcolors = '\033[92m'
     bcolore = '\033[0m'
     for bold in soup.findAll('b'):
         bold.string = "{0}{1}{2}\n".format(bcolors, bold.string, bcolore)
@@ -74,11 +78,18 @@ def html2text(html):
     return soup.text
 
 
-def __print_formatted(text):
+def __format_text(text):
     maxcol = os.get_terminal_size().columns
+    ret = ""
 
-    writer = formatter.DumbWriter(maxcol=maxcol)
-    writer.send_flowing_data(text)
+    for line in text.splitlines():
+        ios = io.StringIO()
+        writer = formatter.DumbWriter(ios, maxcol=maxcol)
+        writer.send_flowing_data(line)
+        ret = "{0}{1}\n".format(ret, ios.getvalue())
+        ios.close()
+
+    return ret
 
 
 def __handle_request_error(request):
