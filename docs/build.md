@@ -21,6 +21,7 @@
     wallabag_delete.py \
     wallabag_help.py \
     wallabag_list.py \
+    wallabag_show.py \
     wallabag_update.py
   ```
 
@@ -37,6 +38,7 @@
     wallabag_delete.py ^
     wallabag_help.py ^
     wallabag_list.py ^
+    wallabag_show.py ^
     wallabag_update.py
   ```
 
