@@ -328,10 +328,11 @@ if command == "show":
     entry_id = argv[len(argv) - 1]
     color = True
     raw = False
+    html = False
 
     try:
         args = getopt.getopt(optionlist, "hr", [
-            "help", "no-color", "raw", "config="])[0]
+            "help", "no-color", "raw", "html", "config="])[0]
     except getopt.GetoptError as ex:
         print("Error: Invalid option \"{0}\"".format(ex.opt))
         print()
@@ -341,4 +342,6 @@ if command == "show":
             color = False
         if opt in ("-r", "--raw"):
             raw = True
-    wallabag_show.show(entry_id, color, raw)
+        if opt == "--html":
+            html = True
+    wallabag_show.show(entry_id, color, raw, html)
