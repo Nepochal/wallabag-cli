@@ -1,7 +1,9 @@
 """
 Show a wallabag entry
 """
+import formatter
 import json
+import os
 from bs4 import BeautifulSoup
 import api
 import conf
@@ -23,7 +25,8 @@ def show(entry_id):
         exit(-1)
 
     output = html2text(entr.content)
-    print(output)
+
+    __print_formatted(output)
 
 
 def html2text(html):
@@ -41,6 +44,12 @@ def html2text(html):
         img.unwrap()
 
     return soup.text
+
+
+def __print_formatted(text):
+    maxcol = os.get_terminal_size().columns
+    writer = formatter.DumbWriter(maxcol=maxcol)
+    writer.send_flowing_data(text)
 
 
 def __handle_request_error(request):
