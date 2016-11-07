@@ -32,6 +32,14 @@ def show(entry_id):
 def html2text(html):
     soup = BeautifulSoup(html, "html.parser")
 
+    # Replace hr with visual lines
+    hrstring = "".ljust(os.get_terminal_size().columns, '-')
+    for hr in soup.findAll('hr'):
+        replace = soup.new_tag('p')
+        replace.string = hrstring
+        hr.insert_after(replace)
+        hr.unwrap()
+
     # Replace images by information-texts
     for img in soup.findAll('img'):
         replace = soup.new_tag('p')
@@ -48,6 +56,7 @@ def html2text(html):
 
 def __print_formatted(text):
     maxcol = os.get_terminal_size().columns
+
     writer = formatter.DumbWriter(maxcol=maxcol)
     writer.send_flowing_data(text)
 
@@ -61,3 +70,5 @@ def __handle_request_error(request):
         print("Error: {0} - {1}".format(request.error_text,
                                         request.error_description))
         exit(-1)
+
+show(590)
