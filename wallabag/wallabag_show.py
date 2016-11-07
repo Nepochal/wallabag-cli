@@ -1,10 +1,10 @@
 """
 Show a wallabag entry
 """
+import io
 import formatter
 import json
 import os
-import io
 from bs4 import BeautifulSoup
 import api
 import conf
