@@ -19,7 +19,11 @@ def list_entries(custom_quantity=None, filter_read=False, filter_starred=None, o
 
     quantity = None
     if custom_quantity is None:
-        quantity = os.get_terminal_size().lines - 2
+        try:
+            quantity = os.get_terminal_size().lines - 2
+        # piped output to file or other process
+        except OSError:
+            quantity = sys.maxsize
     else:
         quantity = custom_quantity
 
@@ -67,7 +71,11 @@ def print_entries(entries, trim, reverse_order=False):
     """
     maxlength = sys.maxsize
     if trim:
-        maxlength = os.get_terminal_size().columns
+        try:
+            maxlength = os.get_terminal_size().columns
+        # piped output to file or other process
+        except OSError:
+            maxlength = sys.maxsize
     size_entry_id = 0
     show_read_column = False
     show_starred_column = False
