@@ -6,6 +6,7 @@ import formatter
 import json
 import os
 from sys import exit
+import sys
 from bs4 import BeautifulSoup
 import api
 import conf
@@ -27,11 +28,13 @@ def show(entry_id, colors=True, raw=False, html=False):
         exit(-1)
 
     title = entr.title
+
     try:
         delimiter = "".ljust(os.get_terminal_size().columns, '=')
     # piped output to file or other process
     except OSError:
         delimiter = "\n"
+        
     article = entr.content
     if not html:
         article = html2text(article, colors)
@@ -96,7 +99,12 @@ def html2text(html, colors=True):
 
 
 def __format_text(text):
-    maxcol = os.get_terminal_size().columns
+    try:
+        maxcol = os.get_terminal_size().columns
+    # piped output to file or other process
+    except OSError:
+        maxcol = sys.maxsize
+
     ret = ""
 
     for line in text.splitlines():
