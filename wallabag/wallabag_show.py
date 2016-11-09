@@ -27,7 +27,11 @@ def show(entry_id, colors=True, raw=False, html=False):
         exit(-1)
 
     title = entr.title
-    delimiter = "".ljust(os.get_terminal_size().columns, '=')
+    try:
+        delimiter = "".ljust(os.get_terminal_size().columns, '=')
+    # piped output to file or other process
+    except OSError:
+        delimiter = "\n"
     article = entr.content
     if not html:
         article = html2text(article, colors)
@@ -66,7 +70,11 @@ def html2text(html, colors=True):
             bold.string = "{0}{1}{2}".format(bcolors, bold.string, bcolore)
 
     # Replace hr with visual lines
-    hrstring = "".ljust(os.get_terminal_size().columns, '-')
+    try:
+        hrstring = "".ljust(os.get_terminal_size().columns, '-')
+    # piped output to file or other process
+    except OSError:
+        hrstring = "-----"
     for hr in soup.findAll('hr'):
         replace = soup.new_tag('p')
         replace.string = hrstring
