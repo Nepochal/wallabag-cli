@@ -6,6 +6,8 @@
 
 If you want to run wallabag-cli directly from source you also need the following python modules:
 
+- beautifulsoup4 4.5.1 or above
+- pycrypto 2.6.1 or above
 - requests 2.11.1 or above
 
 --------------------------------------------------------------------------------
@@ -13,6 +15,7 @@ If you want to run wallabag-cli directly from source you also need the following
 # []()wallabag instance
 
 Wallabag-cli only works with wallabag version 2.1.1 or above. To find the version number log into your wallabag-account and click on "about".
+(Hint: Some features need a higher wallabag version.)
 
 To host your own instance please read [the official documentation](http://doc.wallabag.org/en/master/user/installation.html).
 
