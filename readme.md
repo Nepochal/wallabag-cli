@@ -22,4 +22,4 @@ Please have a look at the [documentation overview](docs/index.md) to begin using
 
 **Missing features**
 
-- Curses interface for interactive use
+- Export articles (Wallabag 2.2 or above)
