@@ -19,8 +19,6 @@ Wallabag-cli only works with wallabag version 2.1.1 or above. To find the versio
 
 To host your own instance please read [the official documentation](http://doc.wallabag.org/en/master/user/installation.html).
 
-Unfortunately the free instance [framabag](https://framabag.org/) is not usable until they switch to wallabag version 2.
-
 --------------------------------------------------------------------------------
 
 # []()wallabag api client credentials
