@@ -69,19 +69,25 @@ def __cryptkey():
 
 
 def __encrypt(value):
-    blocks = math.ceil(len(value) / 16)
-    value = value.ljust(blocks * 16, ' ')
-    ret = AES.new(__cryptkey()).encrypt(value)
-    ret = base64.b64encode(ret)
-    ret = ret.decode("utf-8")
+    try:
+        blocks = math.ceil(len(value) / 16)
+        value = value.ljust(blocks * 16, ' ')
+        ret = AES.new(__cryptkey()).encrypt(value)
+        ret = base64.b64encode(ret)
+        ret = ret.decode("utf-8")
+    except:
+        ret = None
     return ret
 
 
 def __decrypt(value):
-    ret = base64.b64decode(value)
-    ret = AES.new(__cryptkey()).decrypt(ret)
-    ret = ret.decode("utf-8")
-    ret = ret.rstrip()
+    try:
+        ret = base64.b64decode(value)
+        ret = AES.new(__cryptkey()).decrypt(ret)
+        ret = ret.decode("utf-8")
+        ret = ret.rstrip()
+    except:
+        ret = None
     return ret
 
 
@@ -120,9 +126,12 @@ def __dicionary2config(configdict):
                 isinstance(configdict[item], float):
             if item in ["password", "secret"]:
                 configdict[item] = __decrypt(configdict[item])
+                if configdict[item] == None:
+                    return False
             set_config(item, configdict[item])
         elif isinstance(configdict[item], dict):
             __dicionary2config(configdict[item])
+    return True
 
 
 def set_path(path):
@@ -213,8 +222,7 @@ def load(custom_path=None):
             filecontent = file.read()
             file.close()
         dic = json.loads(filecontent)
-        __dicionary2config(dic['wallabag_api'])
-        return True
+        return __dicionary2config(dic['wallabag_api'])
     except json.decoder.JSONDecodeError:
         return False
     except PermissionError:
