@@ -6,8 +6,9 @@ import json
 import time
 import re
 import requests
-import conf
-from conf import Configs
+
+from . import conf
+from .conf import Configs
 
 
 MINIMUM_API_VERSION = 2, 1, 1

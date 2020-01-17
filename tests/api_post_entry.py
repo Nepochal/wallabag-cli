@@ -1,7 +1,10 @@
-import context
 import json
-import conf
-import api
+
+from wallabag import conf
+from wallabag import api
+
+from . import context
+
 
 NEW_ENTRY = "https://en.wikipedia.org/wiki/Bill_%26_Ted%27s_Excellent_Adventure"
 CUSTOM_TITLE = "Bogus!"

@@ -1,6 +1,8 @@
-import context
-import conf
-import api
+from wallabag import conf
+from wallabag import api
+
+from . import context
+
 
 conf.load()
 

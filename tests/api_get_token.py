@@ -1,7 +1,10 @@
-import context
 import json
-import conf
-import api
+
+from wallabag import conf
+from wallabag import api
+
+from . import context
+
 
 conf.load()
 
