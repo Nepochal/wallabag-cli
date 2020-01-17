@@ -3,8 +3,9 @@ Interactive configuration tool for wallabag-cli.
 """
 import re
 from sys import exit
-import api
-import conf
+
+from . import api
+from . import conf
 
 
 def start(ask_serverurl=True, ask_username=True, ask_password=True, ask_oauth2=True):

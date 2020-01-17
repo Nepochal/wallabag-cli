@@ -3,9 +3,10 @@ Module for updating existing entries
 """
 import json
 from sys import exit
-import api
-import conf
-import entry
+
+from . import api
+from . import conf
+from . import entry
 
 
 def update(entry_id, toggle_read=False, toggle_star=False, new_title=None, quiet=False):
