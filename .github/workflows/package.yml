@@ -1,0 +1,23 @@
+name: Deploy Python Package to PyPI
+
+on: release
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-python@v1
+      with:
+        version: 3.8
+    - name: sdist
+      run: |
+        python setup.py sdist bdist_wheel
+    - name: upload
+      env:
+        TWINE_REPOSITORY_URL: https://upload.pypi.org/legacy/
+        TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
+        TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
+      run: |
+        pip install twine
+        twine upload dist/*
