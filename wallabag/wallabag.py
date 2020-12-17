@@ -16,7 +16,7 @@ import wallabag_list
 import wallabag_show
 import wallabag_update
 
-PROGRAM_VERSION = "0.7.2-alpha"
+PROGRAM_VERSION = "0.7.3-alpha"
 
 command = None
 need_config = False
@@ -29,9 +29,13 @@ if platform.system() == "Windows":
         subprocess.check_output(['chcp', '65001'], shell=True)
 
 # Determine custom config path
-for arg in argv:
-    if arg[0:9] == "--config=":
-        conf.set_path(arg[9:len(arg)])
+if argv[1][0:9] == '--config=':
+    conf.set_path(argv[1][9:len(argv[1])])
+    i = 0
+    for arg in argv:
+        if i > 0:
+            argv[i - 1] = arg
+        i = i + 1
 
 # Determine command or general standalone option
 if len(argv) == 1 or argv[1] in {'-h', '--help'}:
