@@ -16,7 +16,7 @@ import wallabag_list
 import wallabag_show
 import wallabag_update
 
-PROGRAM_VERSION = "0.7.3-alpha"
+PROGRAM_VERSION = "0.7.4-beta"
 
 command = None
 need_config = False
@@ -46,7 +46,7 @@ elif argv[1] in {'-v', '--version'}:
     exit(0)
 elif argv[1] in {'--about'}:
     print("wallabag-cli")
-    print("© 2016 by Michael Scholz (https://mischolz.de)")
+    print("© 2016-2021 by Michael Scholz (https://mischolz.de)")
     print()
     print("This software is licensed under the MIT.")
     exit(0)
