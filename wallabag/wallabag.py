@@ -30,7 +30,7 @@ if platform.system() == "Windows":
         subprocess.check_output(['chcp', '65001'], shell=True)
 
 # Determine custom config path
-if argv[1][0:9] == '--config=':
+if len(argv) > 1 and argv[1][0:9] == '--config=':
     conf.set_path(argv[1][9:len(argv[1])])
     i = 0
     for arg in argv:
