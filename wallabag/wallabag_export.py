@@ -22,26 +22,35 @@ def export_entry(entry_id, outputfile=''):
         outputfile = 'wallabag_' + entry_id + '.txt'
 
     form = 'txt'
+    filemode = 't'
 
     x = outputfile.split(".")
     if len(x) > 1:
         ext = x[len(x)-1].lower()
         if ext == 'txt':
             form = 'txt'
+            filemode = 't'
         elif ext == 'csv':
             form = 'csv'
+            filemode = 't'
         elif ext == 'xml':
             form = 'xml'
+            filemode = 't'
         elif ext == 'json':
             form = 'json'
+            filemode = 't'
         elif ext == 'pdf':
             form = 'pdf'
+            filemode = 'b'
         elif ext == 'epub':
             form = 'epub'
+            filemode = 't'
         elif ext == 'mobi':
             form = 'mobi'
+            filemode = 't'
         elif ext == 'azw':
             form = 'mobi'
+            filemode = 't'
 
     try:
         request = api.api_export_entry(entry_id, form)
@@ -53,8 +62,9 @@ def export_entry(entry_id, outputfile=''):
         print()
         exit(-1)
 
-    print(output)
-
+    filehandler = open(outputfile, 'w')
+    filehandler.write(output)
+    filehandler.close()
 
 def __handle_request_error(request):
     if request.has_error():
