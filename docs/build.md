@@ -19,6 +19,7 @@
     wallabag_add.py \
     wallabag_config.py \
     wallabag_delete.py \
+    wallabag_export.py \
     wallabag_help.py \
     wallabag_list.py \
     wallabag_show.py \
@@ -36,6 +37,7 @@
     wallabag_add.py ^
     wallabag_config.py ^
     wallabag_delete.py ^
+    wallabag_export.py ^
     wallabag_help.py ^
     wallabag_list.py ^
     wallabag_show.py ^
