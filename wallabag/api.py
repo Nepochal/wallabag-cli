@@ -42,6 +42,7 @@ class ApiMethod(Enum):
     """
     add_entry = "/api/entries"
     delete_entry = "/api/entries/{0}"
+    export_entry = "/api/entries/{0}/export.{1}"
     get_entry = "/api/entries/{0}"
     update_entry = "/api/entries/{0}"
     entry_exists = "/api/entries/exists"
@@ -292,6 +293,17 @@ def api_get_entry(entry_id):
     Gets an existing entry from the wallabag-account.
     """
     url = __get_api_url(ApiMethod.get_entry).format(entry_id)
+    header = __get_authorization_header()
+
+    response = __request_get(url, header)
+    return response
+
+
+def api_export_entry(entry_id, form='txt'):
+    """
+    Exports an existing entry from the wallabag-account to a file
+    """
+    url = __get_api_url(ApiMethod.export_entry).format(entry_id, form)
     header = __get_authorization_header()
 
     response = __request_get(url, header)

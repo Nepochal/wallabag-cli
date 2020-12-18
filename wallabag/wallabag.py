@@ -12,6 +12,7 @@ from wallabag_help import show as help
 import wallabag_add
 import wallabag_config
 import wallabag_delete
+import wallabag_export
 import wallabag_list
 import wallabag_show
 import wallabag_update
@@ -50,7 +51,7 @@ elif argv[1] in {'--about'}:
     print()
     print("This software is licensed under the MIT.")
     exit(0)
-elif argv[1] in ["config", "add", "update", "read", "star", "delete", "list", "show"]:
+elif argv[1] in ["config", "add", "update", "read", "star", "delete", "list", "show", "export"]:
     command = argv[1]
     need_config = command != "config"
 elif argv[1][0] != '-':
@@ -349,3 +350,28 @@ if command == "show":
         if opt == "--html":
             html = True
     wallabag_show.show(entry_id, color, raw, html)
+
+if command == "export":
+    if "-h" in argv[2:len(argv)] or "--help" in argv[2:len(argv)]:
+        help(argv[0], command)
+        exit(0)
+
+    if len(argv) < 3:
+        print("Error: Missing entry-id.")
+        print()
+        exit(-1)
+
+    optionlist = argv[2:len(argv) - 1]
+    entry_id = argv[len(argv) - 1]    
+
+    try:
+        args = getopt.getopt(optionlist, "ht:srq", [
+            "help", "config=", "format=", "quiet"])[0]
+    except getopt.GetoptError as ex:
+        print("Error: Invalid option \"{0}\"".format(ex.opt))
+        print()
+        exit(-1)
+    #for opt, arg in args:
+    #    if opt in ('-q', '--quiet'):
+    #        quiet = True
+    wallabag_export.export_entry(entry_id)
