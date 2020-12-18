@@ -17,7 +17,7 @@ import wallabag_list
 import wallabag_show
 import wallabag_update
 
-PROGRAM_VERSION = "0.7.3-beta"
+PROGRAM_VERSION = "0.8.0-beta"
 
 command = None
 need_config = False
