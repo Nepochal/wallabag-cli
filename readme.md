@@ -10,7 +10,7 @@ Please have a look at the [documentation overview](docs/index.md) to begin using
 
 --------------------------------------------------------------------------------
 
-**Already implemented features**
+**Features**
 
 - List entries (filterable)
 - Show the content of an entry
@@ -19,7 +19,4 @@ Please have a look at the [documentation overview](docs/index.md) to begin using
 - Mark existing entries as read
 - Mark existing entries as starred
 - Change the title of existing entries
-
-**Missing features**
-
-- Export articles (Wallabag 2.2 or above)
+- Export articles as file

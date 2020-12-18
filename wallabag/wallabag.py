@@ -50,6 +50,8 @@ elif argv[1] in {'--about'}:
     print("© 2016-2021 by Michael Scholz (https://mischolz.de)")
     print()
     print("This software is licensed under the MIT.")
+    print("You can find a copy of the license at")
+    print("https://cloud.mischolz.de/p/licenses/wallabag-cli.txt")
     exit(0)
 elif argv[1] in ["config", "add", "update", "read", "star", "delete", "list", "show", "export"]:
     command = argv[1]
