@@ -362,7 +362,13 @@ if command == "export":
         exit(-1)
 
     optionlist = argv[2:len(argv) - 1]
-    entry_id = argv[len(argv) - 1]    
+
+    entry_id = argv[2]
+
+    outputfile = ''
+
+    if len(argv) > 3:
+        outputfile = argv[3]
 
     try:
         args = getopt.getopt(optionlist, "ht:srq", [
@@ -374,4 +380,4 @@ if command == "export":
     #for opt, arg in args:
     #    if opt in ('-q', '--quiet'):
     #        quiet = True
-    wallabag_export.export_entry(entry_id)
+    wallabag_export.export_entry(entry_id, outputfile)

@@ -18,7 +18,30 @@ def export_entry(entry_id, outputfile=''):
     """
     conf.load()
 
+    if outputfile == '':
+        outputfile = 'wallabag_' + entry_id + '.txt'
+
     form = 'txt'
+
+    x = outputfile.split(".")
+    if len(x) > 1:
+        ext = x[len(x)-1].lower()
+        if ext == 'txt':
+            form = 'txt'
+        elif ext == 'csv':
+            form = 'csv'
+        elif ext == 'xml':
+            form = 'xml'
+        elif ext == 'json':
+            form = 'json'
+        elif ext == 'pdf':
+            form = 'pdf'
+        elif ext == 'epub':
+            form = 'epub'
+        elif ext == 'mobi':
+            form = 'mobi'
+        elif ext == 'azw':
+            form = 'mobi'
 
     try:
         request = api.api_export_entry(entry_id, form)
