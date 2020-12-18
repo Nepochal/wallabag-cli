@@ -21,6 +21,7 @@ Commands:
   config           Start the configuration.
   add              Add a new entry to wallabag.
   delete           Delete an entry.
+  export           Export an entry to a file.
   list             List the entries on the wallabag account.
   show             Show an entry.
   update           Change the read- or starred-status of an existing entry
@@ -90,6 +91,23 @@ Options:
   --config=<path>  Use a custom config file.
 """.format(startscript)
     index['delete'] = delete_txt
+
+    # export
+    export_txt = """
+Usage:
+  {0} export [options] <entry-id> [<output file>]
+
+Description:
+  Exports an entry to a file.
+  The entry-id can be found in "{0} list" for example.
+  The export format is determined by the file extension.
+  Possible extensions are txt, csv, xml, json, pdf, epub, mobi and azw
+
+Options:
+  -h, --help       Show help.
+  --config=<path>  Use a custom config file.
+""".format(startscript)
+    index['export'] = export_txt
 
     # list
     list_txt = """
