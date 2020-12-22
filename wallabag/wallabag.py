@@ -37,6 +37,7 @@ if len(argv) > 1 and argv[1][0:9] == '--config=':
         if i > 0:
             argv[i - 1] = arg
         i = i + 1
+    del(argv[len(argv) - 1])
 
 # Determine command or general standalone option
 if len(argv) == 1 or argv[1] in {'-h', '--help'}:
@@ -363,23 +364,35 @@ if command == "export":
         print()
         exit(-1)
 
-    optionlist = argv[2:len(argv) - 1]
-
-    entry_id = argv[2]
-
-    outputfile = ''
-
-    if len(argv) > 3:
-        outputfile = argv[3]
+    optionlist = argv[2:len(argv)]
 
     try:
-        args = getopt.getopt(optionlist, "ht:srq", [
-            "help", "config=", "format=", "quiet"])[0]
+        args = getopt.getopt(optionlist, "h", [
+            "help", "config="])[0]
     except getopt.GetoptError as ex:
         print("Error: Invalid option \"{0}\"".format(ex.opt))
         print()
         exit(-1)
-    #for opt, arg in args:
-    #    if opt in ('-q', '--quiet'):
-    #        quiet = True
+
+    entry_id = 0
+    outputfile = ''
+
+    for opt in optionlist:
+        if "--config" in opt:
+            continue
+        else:
+            if entry_id == 0:
+                entry_id = opt
+            elif outputfile == '':
+                outputfile = opt
+            else:
+                print("Error: Too many arguments.")
+                print()
+                exit(-1)
+
+    if entry_id == 0:
+        print("Error: Missing entry-id.")
+        print()
+        exit(-1)
+
     wallabag_export.export_entry(entry_id, outputfile)
