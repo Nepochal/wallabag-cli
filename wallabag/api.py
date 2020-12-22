@@ -159,6 +159,19 @@ def __request_get(url, headers=None, params=None):
     return ret
 
 
+def __request_get_raw(url, headers=None, params=None):
+    ret = None
+    request = None
+
+    try:
+        request = requests.get(url, headers=headers, params=params)
+        ret = request.content
+    # dns error
+    except (requests.exceptions.ConnectionError, requests.exceptions.MissingSchema):
+        ret = None
+    return ret
+
+
 def __request_post(url, headers=None, data=None):
     ret = None
     request = None
@@ -301,12 +314,23 @@ def api_get_entry(entry_id):
 
 def api_export_entry(entry_id, form='txt'):
     """
-    Exports an existing entry from the wallabag-account to a file
+    Exports an existing entry from the wallabag-account to a text-file
     """
     url = __get_api_url(ApiMethod.export_entry).format(entry_id, form)
     header = __get_authorization_header()
 
     response = __request_get(url, header)
+    return response
+
+
+def api_export_entry_binary(entry_id, form='txt'):
+    """
+    Exports an existing entry from the wallabag-account to a binary-file
+    """
+    url = __get_api_url(ApiMethod.export_entry).format(entry_id, form)
+    header = __get_authorization_header()
+
+    response = __request_get_raw(url, header)
     return response
 
 

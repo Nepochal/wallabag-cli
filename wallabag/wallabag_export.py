@@ -47,22 +47,25 @@ def export_entry(entry_id, outputfile=''):
             filemode = 't'
         elif ext == 'mobi':
             form = 'mobi'
-            filemode = 't'
+            filemode = 'b'
         elif ext == 'azw':
             form = 'mobi'
-            filemode = 't'
+            filemode = 'b'
 
     try:
-        request = api.api_export_entry(entry_id, form)
-        __handle_request_error(request)
-        # output = entry.Entry(json.loads(request.response))
-        output = request.response
+        if filemode == 't':
+            request = api.api_export_entry(entry_id, form)
+            __handle_request_error(request)
+            output = request.response
+        elif filemode == 'b':
+            request = api.api_export_entry_binary(entry_id, form)
+            output = request
     except api.OAuthException as ex:
         print("Error: {0}".format(ex.text))
         print()
         exit(-1)
 
-    filehandler = open(outputfile, 'w')
+    filehandler = open(outputfile, 'w' + filemode)
     filehandler.write(output)
     filehandler.close()
 
