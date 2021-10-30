@@ -212,10 +212,14 @@ def is_minimum_version(version_response):
     """
     versionstring = version_response.response
 
-    if not re.compile('"\\d+\\.\\d+\\.\\d+"').match(versionstring):
+    # currently app.wallabag.it returns "2.4.1-dev". This should add support for
+    # similar schemes by dropping everything after the first "-".
+    versionstring = versionstring.split("-")[0].strip('"')
+
+    if not re.compile('\\d+\\.\\d+\\.\\d+').match(versionstring):
         return False
 
-    ver = versionstring.strip('"').split('.')
+    ver = versionstring.split('.')
 
     major = int(ver[0])
     minor = int(ver[1])

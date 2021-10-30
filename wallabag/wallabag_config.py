@@ -126,8 +126,8 @@ def __serverurl(forced):
 
     # minimum api check
     if not api.is_minimum_version(testresponse):
-        print("Your wallabag instance is too old. You need at least version {0}.".format(
-            api.MINIMUM_API_VERSION_HR))
+        print("Your wallabag instance (version {0}) is too old. You need at least version {1}.".format(
+            testresponse.response, api.MINIMUM_API_VERSION_HR))
         exit(-1)
 
     return value
